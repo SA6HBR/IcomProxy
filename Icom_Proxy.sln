@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icom_Proxy", "Icom_Proxy.csproj", "{4F76DE68-9C39-48CA-A68C-9194D5A35E04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F76DE68-9C39-48CA-A68C-9194D5A35E04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F76DE68-9C39-48CA-A68C-9194D5A35E04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F76DE68-9C39-48CA-A68C-9194D5A35E04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F76DE68-9C39-48CA-A68C-9194D5A35E04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02B912B2-5B8B-4E27-8BF4-DE8FA0452700}
+	EndGlobalSection
+EndGlobal
