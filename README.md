@@ -1,4 +1,4 @@
-# IcomProxy
+# Icom-Proxy
 To run multiple programs on just one Icom-radio
 
 ![alt text](https://github.com/SA6HBR/IcomProxy/blob/main/image/Icom_Proxy.png "Icom-Proxy")
