@@ -5,6 +5,10 @@ To run multiple programs on just one Icom-radio
 
 ![alt text](https://github.com/SA6HBR/IcomProxy/blob/main/image/Diagram1.png "Diagram1")
 
+![alt text](https://github.com/SA6HBR/IcomProxy/blob/main/image/tnc_schema.png "TNC")
+You need to tune in the right resistor to get good sound
+
+
 
 ## Useful Links
 
