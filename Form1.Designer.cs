@@ -29,58 +29,48 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.DebugLogTextBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.Program3FeedBackCheckBox = new System.Windows.Forms.CheckBox();
+            this.Program2FeedBackCheckBox = new System.Windows.Forms.CheckBox();
+            this.Program1FeedBackCheckBox = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageRadio = new System.Windows.Forms.TabPage();
+            this.TrashButton = new System.Windows.Forms.Button();
+            this.RadioComPortList = new System.Windows.Forms.ComboBox();
+            this.RadioBaudList = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ComPortConnect1 = new System.Windows.Forms.Button();
-            this.ComPortDisconnect1 = new System.Windows.Forms.Button();
-            this.ComPortDisconnect2 = new System.Windows.Forms.Button();
-            this.ComPortConnect2 = new System.Windows.Forms.Button();
-            this.label_port_name2 = new System.Windows.Forms.Label();
-            this.ComPortDisconnect4 = new System.Windows.Forms.Button();
-            this.ComPortConnect4 = new System.Windows.Forms.Button();
-            this.label_port_name4 = new System.Windows.Forms.Label();
-            this.ComPortDisconnect3 = new System.Windows.Forms.Button();
-            this.ComPortConnect3 = new System.Windows.Forms.Button();
-            this.label_port_name3 = new System.Windows.Forms.Label();
-            this.PttButtonRTS = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.PttButtonCIV = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox_hex = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.checkBox_PTT_CIV = new System.Windows.Forms.CheckBox();
-            this.checkBox_PTT_RTS = new System.Windows.Forms.CheckBox();
-            this.checkBox_FeedBack4 = new System.Windows.Forms.CheckBox();
-            this.checkBox_FeedBack3 = new System.Windows.Forms.CheckBox();
-            this.checkBox_FeedBack2 = new System.Windows.Forms.CheckBox();
-            this.ComPortNumber4 = new System.Windows.Forms.ComboBox();
-            this.ComPortNumber3 = new System.Windows.Forms.ComboBox();
-            this.ComPortNumber2 = new System.Windows.Forms.ComboBox();
-            this.BaudComboBox = new System.Windows.Forms.ComboBox();
-            this.ComPortNumber1 = new System.Windows.Forms.ComboBox();
-            this.SoundButton = new System.Windows.Forms.Button();
-            this.DeviceButton = new System.Windows.Forms.Button();
-            this.com0comButton = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPageComPort = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
-            this.tabPageSettings = new System.Windows.Forms.TabPage();
-            this.checkBoxSaveAppData = new System.Windows.Forms.CheckBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox_Ptt_timeout = new System.Windows.Forms.TextBox();
-            this.checkBoxForceCIV = new System.Windows.Forms.CheckBox();
+            this.RefreshUsbButton = new System.Windows.Forms.Button();
+            this.RadioConnectButton = new System.Windows.Forms.Button();
+            this.RadioDisconnectButton = new System.Windows.Forms.Button();
+            this.RadioHexTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tabPageProgram = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox_port_name4 = new System.Windows.Forms.TextBox();
+            this.Program3infoBox = new System.Windows.Forms.TextBox();
+            this.Program3DisconnectButton = new System.Windows.Forms.Button();
+            this.label29 = new System.Windows.Forms.Label();
+            this.Program3NameTextBox = new System.Windows.Forms.TextBox();
+            this.Program3ConnectButton = new System.Windows.Forms.Button();
+            this.Program3Com0comList = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox_port_name3 = new System.Windows.Forms.TextBox();
+            this.Program2infoBox = new System.Windows.Forms.TextBox();
+            this.Program2DisconnectButton = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.Program2ConnectButton = new System.Windows.Forms.Button();
+            this.Program2NameTextBox = new System.Windows.Forms.TextBox();
+            this.Program2Com0comList = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox_port_name2 = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.textBoxDLTimeOut = new System.Windows.Forms.TextBox();
+            this.Program1infoBox = new System.Windows.Forms.TextBox();
+            this.Program1DisconnectButton = new System.Windows.Forms.Button();
+            this.label27 = new System.Windows.Forms.Label();
+            this.Program1ConnectButton = new System.Windows.Forms.Button();
+            this.Program1NameTextBox = new System.Windows.Forms.TextBox();
+            this.Program1Com0comList = new System.Windows.Forms.ComboBox();
+            this.tabPageTone = new System.Windows.Forms.TabPage();
+            this.toneInfoBox = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -127,214 +117,52 @@
             this.checkBox_DL_0300 = new System.Windows.Forms.CheckBox();
             this.checkBox_DL_0900 = new System.Windows.Forms.CheckBox();
             this.checkBox_DL_0400 = new System.Windows.Forms.CheckBox();
-            this.buttonStopDummyLoad = new System.Windows.Forms.Button();
-            this.buttonStartDummyLoad = new System.Windows.Forms.Button();
+            this.StopDummyLoadButton = new System.Windows.Forms.Button();
+            this.StartDummyLoadButton = new System.Windows.Forms.Button();
+            this.tabPageSettings = new System.Windows.Forms.TabPage();
+            this.OpenExplorerForConfigFileButton = new System.Windows.Forms.Button();
+            this.ShowToneTestButton = new System.Windows.Forms.Button();
+            this.LogTimeCheckBox = new System.Windows.Forms.CheckBox();
+            this.LogDateCheckBox = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.DeviceButton = new System.Windows.Forms.Button();
+            this.com0comButton = new System.Windows.Forms.Button();
+            this.SoundButton = new System.Windows.Forms.Button();
+            this.checkBoxForceCIV = new System.Windows.Forms.CheckBox();
+            this.DebugLogLinesTextBox = new System.Windows.Forms.TextBox();
+            this.RadioTxTimeoutTextBox = new System.Windows.Forms.TextBox();
+            this.ToneLengthBox = new System.Windows.Forms.TextBox();
+            this.checkBoxSaveAppData = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.RefreshButton = new System.Windows.Forms.Button();
-            this.TrashButton = new System.Windows.Forms.Button();
+            this.RadioLed = new System.Windows.Forms.Button();
+            this.Program1Led = new System.Windows.Forms.Button();
+            this.Program2Led = new System.Windows.Forms.Button();
+            this.Program3Led = new System.Windows.Forms.Button();
+            this.TXButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.tabPageComPort.SuspendLayout();
-            this.tabPageSettings.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.tabPageRadio.SuspendLayout();
+            this.tabPageProgram.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tabPageTone.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tabPageSettings.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // DebugLogTextBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(90, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Com Port";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(196, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Baud";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Radio";
-            // 
-            // ComPortConnect1
-            // 
-            this.ComPortConnect1.Location = new System.Drawing.Point(347, 24);
-            this.ComPortConnect1.Name = "ComPortConnect1";
-            this.ComPortConnect1.Size = new System.Drawing.Size(72, 23);
-            this.ComPortConnect1.TabIndex = 3;
-            this.ComPortConnect1.Text = "Connect";
-            this.ComPortConnect1.UseVisualStyleBackColor = true;
-            this.ComPortConnect1.Click += new System.EventHandler(this.ComPortConnect1_Click);
-            // 
-            // ComPortDisconnect1
-            // 
-            this.ComPortDisconnect1.Enabled = false;
-            this.ComPortDisconnect1.Location = new System.Drawing.Point(425, 24);
-            this.ComPortDisconnect1.Name = "ComPortDisconnect1";
-            this.ComPortDisconnect1.Size = new System.Drawing.Size(72, 23);
-            this.ComPortDisconnect1.TabIndex = 4;
-            this.ComPortDisconnect1.Text = "Disconnect";
-            this.ComPortDisconnect1.UseVisualStyleBackColor = true;
-            this.ComPortDisconnect1.Click += new System.EventHandler(this.ComPortDisconnect1_Click);
-            // 
-            // ComPortDisconnect2
-            // 
-            this.ComPortDisconnect2.Enabled = false;
-            this.ComPortDisconnect2.Location = new System.Drawing.Point(425, 50);
-            this.ComPortDisconnect2.Name = "ComPortDisconnect2";
-            this.ComPortDisconnect2.Size = new System.Drawing.Size(72, 23);
-            this.ComPortDisconnect2.TabIndex = 8;
-            this.ComPortDisconnect2.Text = "Disconnect";
-            this.ComPortDisconnect2.UseVisualStyleBackColor = true;
-            this.ComPortDisconnect2.Click += new System.EventHandler(this.ComPortDisconnect2_Click);
-            // 
-            // ComPortConnect2
-            // 
-            this.ComPortConnect2.Location = new System.Drawing.Point(347, 50);
-            this.ComPortConnect2.Name = "ComPortConnect2";
-            this.ComPortConnect2.Size = new System.Drawing.Size(72, 23);
-            this.ComPortConnect2.TabIndex = 7;
-            this.ComPortConnect2.Text = "Connect";
-            this.ComPortConnect2.UseVisualStyleBackColor = true;
-            this.ComPortConnect2.Click += new System.EventHandler(this.ComPortConnect2_Click);
-            // 
-            // label_port_name2
-            // 
-            this.label_port_name2.AutoSize = true;
-            this.label_port_name2.Location = new System.Drawing.Point(8, 55);
-            this.label_port_name2.Name = "label_port_name2";
-            this.label_port_name2.Size = new System.Drawing.Size(55, 13);
-            this.label_port_name2.TabIndex = 9;
-            this.label_port_name2.Text = "Program 1";
-            // 
-            // ComPortDisconnect4
-            // 
-            this.ComPortDisconnect4.Enabled = false;
-            this.ComPortDisconnect4.Location = new System.Drawing.Point(425, 104);
-            this.ComPortDisconnect4.Name = "ComPortDisconnect4";
-            this.ComPortDisconnect4.Size = new System.Drawing.Size(72, 23);
-            this.ComPortDisconnect4.TabIndex = 17;
-            this.ComPortDisconnect4.Text = "Disconnect";
-            this.ComPortDisconnect4.UseVisualStyleBackColor = true;
-            this.ComPortDisconnect4.Click += new System.EventHandler(this.ComPortDisconnect4_Click);
-            // 
-            // ComPortConnect4
-            // 
-            this.ComPortConnect4.Location = new System.Drawing.Point(347, 104);
-            this.ComPortConnect4.Name = "ComPortConnect4";
-            this.ComPortConnect4.Size = new System.Drawing.Size(72, 23);
-            this.ComPortConnect4.TabIndex = 16;
-            this.ComPortConnect4.Text = "Connect";
-            this.ComPortConnect4.UseVisualStyleBackColor = true;
-            this.ComPortConnect4.Click += new System.EventHandler(this.ComPortConnect4_Click);
-            // 
-            // label_port_name4
-            // 
-            this.label_port_name4.AutoSize = true;
-            this.label_port_name4.Location = new System.Drawing.Point(8, 109);
-            this.label_port_name4.Name = "label_port_name4";
-            this.label_port_name4.Size = new System.Drawing.Size(55, 13);
-            this.label_port_name4.TabIndex = 19;
-            this.label_port_name4.Text = "Program 3";
-            // 
-            // ComPortDisconnect3
-            // 
-            this.ComPortDisconnect3.Enabled = false;
-            this.ComPortDisconnect3.Location = new System.Drawing.Point(425, 77);
-            this.ComPortDisconnect3.Name = "ComPortDisconnect3";
-            this.ComPortDisconnect3.Size = new System.Drawing.Size(72, 23);
-            this.ComPortDisconnect3.TabIndex = 14;
-            this.ComPortDisconnect3.Text = "Disconnect";
-            this.ComPortDisconnect3.UseVisualStyleBackColor = true;
-            this.ComPortDisconnect3.Click += new System.EventHandler(this.ComPortDisconnect3_Click);
-            // 
-            // ComPortConnect3
-            // 
-            this.ComPortConnect3.Location = new System.Drawing.Point(347, 77);
-            this.ComPortConnect3.Name = "ComPortConnect3";
-            this.ComPortConnect3.Size = new System.Drawing.Size(72, 23);
-            this.ComPortConnect3.TabIndex = 13;
-            this.ComPortConnect3.Text = "Connect";
-            this.ComPortConnect3.UseVisualStyleBackColor = true;
-            this.ComPortConnect3.Click += new System.EventHandler(this.ComPortConnect3_Click);
-            // 
-            // label_port_name3
-            // 
-            this.label_port_name3.AutoSize = true;
-            this.label_port_name3.Location = new System.Drawing.Point(8, 82);
-            this.label_port_name3.Name = "label_port_name3";
-            this.label_port_name3.Size = new System.Drawing.Size(55, 13);
-            this.label_port_name3.TabIndex = 14;
-            this.label_port_name3.Text = "Program 2";
-            // 
-            // PttButtonRTS
-            // 
-            this.PttButtonRTS.Enabled = false;
-            this.PttButtonRTS.Location = new System.Drawing.Point(526, 377);
-            this.PttButtonRTS.Name = "PttButtonRTS";
-            this.PttButtonRTS.Size = new System.Drawing.Size(40, 36);
-            this.PttButtonRTS.TabIndex = 5;
-            this.PttButtonRTS.Text = "PTT RTS";
-            this.PttButtonRTS.UseVisualStyleBackColor = true;
-            this.PttButtonRTS.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PttPress);
-            this.PttButtonRTS.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PttRelease);
-            this.PttButtonRTS.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PttPress);
-            this.PttButtonRTS.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PttRelease);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(11, 162);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(586, 169);
-            this.textBox1.TabIndex = 21;
-            this.textBox1.TabStop = false;
-            // 
-            // PttButtonCIV
-            // 
-            this.PttButtonCIV.Enabled = false;
-            this.PttButtonCIV.Location = new System.Drawing.Point(572, 377);
-            this.PttButtonCIV.Name = "PttButtonCIV";
-            this.PttButtonCIV.Size = new System.Drawing.Size(40, 36);
-            this.PttButtonCIV.TabIndex = 22;
-            this.PttButtonCIV.Text = "PTT CI-V";
-            this.PttButtonCIV.UseVisualStyleBackColor = true;
-            this.PttButtonCIV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PttPressCIV);
-            this.PttButtonCIV.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PttReleaseCIV);
-            this.PttButtonCIV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PttPressCIV);
-            this.PttButtonCIV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PttReleaseCIV);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(268, 8);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(68, 13);
-            this.label7.TabIndex = 23;
-            this.label7.Text = "CI-V Address";
-            // 
-            // textBox_hex
-            // 
-            this.textBox_hex.Location = new System.Drawing.Point(268, 26);
-            this.textBox_hex.Name = "textBox_hex";
-            this.textBox_hex.Size = new System.Drawing.Size(25, 20);
-            this.textBox_hex.TabIndex = 24;
+            this.DebugLogTextBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DebugLogTextBox.Location = new System.Drawing.Point(10, 81);
+            this.DebugLogTextBox.Multiline = true;
+            this.DebugLogTextBox.Name = "DebugLogTextBox";
+            this.DebugLogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DebugLogTextBox.Size = new System.Drawing.Size(545, 155);
+            this.DebugLogTextBox.TabIndex = 21;
+            this.DebugLogTextBox.TabStop = false;
             // 
             // label9
             // 
@@ -344,97 +172,97 @@
             this.label9.Size = new System.Drawing.Size(0, 13);
             this.label9.TabIndex = 32;
             // 
-            // checkBox_PTT_CIV
+            // Program3FeedBackCheckBox
             // 
-            this.checkBox_PTT_CIV.AutoSize = true;
-            this.checkBox_PTT_CIV.Location = new System.Drawing.Point(6, 42);
-            this.checkBox_PTT_CIV.Name = "checkBox_PTT_CIV";
-            this.checkBox_PTT_CIV.Size = new System.Drawing.Size(109, 17);
-            this.checkBox_PTT_CIV.TabIndex = 30;
-            this.checkBox_PTT_CIV.Text = "Copy PTT -> CI-V";
-            this.checkBox_PTT_CIV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox_PTT_CIV.UseVisualStyleBackColor = true;
-            this.checkBox_PTT_CIV.CheckedChanged += new System.EventHandler(this.SaveSettings);
+            this.Program3FeedBackCheckBox.AutoSize = true;
+            this.Program3FeedBackCheckBox.Location = new System.Drawing.Point(6, 42);
+            this.Program3FeedBackCheckBox.Name = "Program3FeedBackCheckBox";
+            this.Program3FeedBackCheckBox.Size = new System.Drawing.Size(105, 17);
+            this.Program3FeedBackCheckBox.TabIndex = 27;
+            this.Program3FeedBackCheckBox.Text = "Radio Feedback";
+            this.Program3FeedBackCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Program3FeedBackCheckBox.UseVisualStyleBackColor = true;
+            this.Program3FeedBackCheckBox.CheckedChanged += new System.EventHandler(this.ProgramInfoBoxes_Update);
             // 
-            // checkBox_PTT_RTS
+            // Program2FeedBackCheckBox
             // 
-            this.checkBox_PTT_RTS.AutoSize = true;
-            this.checkBox_PTT_RTS.Location = new System.Drawing.Point(6, 19);
-            this.checkBox_PTT_RTS.Name = "checkBox_PTT_RTS";
-            this.checkBox_PTT_RTS.Size = new System.Drawing.Size(111, 17);
-            this.checkBox_PTT_RTS.TabIndex = 29;
-            this.checkBox_PTT_RTS.Text = "Copy PTT -> RTS";
-            this.checkBox_PTT_RTS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox_PTT_RTS.UseVisualStyleBackColor = true;
-            this.checkBox_PTT_RTS.CheckedChanged += new System.EventHandler(this.SaveSettings);
+            this.Program2FeedBackCheckBox.AutoSize = true;
+            this.Program2FeedBackCheckBox.Location = new System.Drawing.Point(6, 42);
+            this.Program2FeedBackCheckBox.Name = "Program2FeedBackCheckBox";
+            this.Program2FeedBackCheckBox.Size = new System.Drawing.Size(105, 17);
+            this.Program2FeedBackCheckBox.TabIndex = 26;
+            this.Program2FeedBackCheckBox.Text = "Radio Feedback";
+            this.Program2FeedBackCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Program2FeedBackCheckBox.UseVisualStyleBackColor = true;
+            this.Program2FeedBackCheckBox.CheckedChanged += new System.EventHandler(this.ProgramInfoBoxes_Update);
             // 
-            // checkBox_FeedBack4
+            // Program1FeedBackCheckBox
             // 
-            this.checkBox_FeedBack4.AutoSize = true;
-            this.checkBox_FeedBack4.Location = new System.Drawing.Point(6, 42);
-            this.checkBox_FeedBack4.Name = "checkBox_FeedBack4";
-            this.checkBox_FeedBack4.Size = new System.Drawing.Size(105, 17);
-            this.checkBox_FeedBack4.TabIndex = 27;
-            this.checkBox_FeedBack4.Text = "Radio Feedback";
-            this.checkBox_FeedBack4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox_FeedBack4.UseVisualStyleBackColor = true;
-            this.checkBox_FeedBack4.CheckedChanged += new System.EventHandler(this.SaveSettings);
+            this.Program1FeedBackCheckBox.AutoSize = true;
+            this.Program1FeedBackCheckBox.Location = new System.Drawing.Point(6, 42);
+            this.Program1FeedBackCheckBox.Name = "Program1FeedBackCheckBox";
+            this.Program1FeedBackCheckBox.Size = new System.Drawing.Size(105, 17);
+            this.Program1FeedBackCheckBox.TabIndex = 25;
+            this.Program1FeedBackCheckBox.Text = "Radio Feedback";
+            this.Program1FeedBackCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Program1FeedBackCheckBox.UseVisualStyleBackColor = true;
+            this.Program1FeedBackCheckBox.CheckedChanged += new System.EventHandler(this.ProgramInfoBoxes_Update);
             // 
-            // checkBox_FeedBack3
+            // tabControl1
             // 
-            this.checkBox_FeedBack3.AutoSize = true;
-            this.checkBox_FeedBack3.Location = new System.Drawing.Point(6, 42);
-            this.checkBox_FeedBack3.Name = "checkBox_FeedBack3";
-            this.checkBox_FeedBack3.Size = new System.Drawing.Size(105, 17);
-            this.checkBox_FeedBack3.TabIndex = 26;
-            this.checkBox_FeedBack3.Text = "Radio Feedback";
-            this.checkBox_FeedBack3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox_FeedBack3.UseVisualStyleBackColor = true;
-            this.checkBox_FeedBack3.CheckedChanged += new System.EventHandler(this.SaveSettings);
+            this.tabControl1.Controls.Add(this.tabPageRadio);
+            this.tabControl1.Controls.Add(this.tabPageProgram);
+            this.tabControl1.Controls.Add(this.tabPageTone);
+            this.tabControl1.Controls.Add(this.tabPageSettings);
+            this.tabControl1.Location = new System.Drawing.Point(3, 7);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(611, 277);
+            this.tabControl1.TabIndex = 38;
             // 
-            // checkBox_FeedBack2
+            // tabPageRadio
             // 
-            this.checkBox_FeedBack2.AutoSize = true;
-            this.checkBox_FeedBack2.Location = new System.Drawing.Point(6, 42);
-            this.checkBox_FeedBack2.Name = "checkBox_FeedBack2";
-            this.checkBox_FeedBack2.Size = new System.Drawing.Size(105, 17);
-            this.checkBox_FeedBack2.TabIndex = 25;
-            this.checkBox_FeedBack2.Text = "Radio Feedback";
-            this.checkBox_FeedBack2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox_FeedBack2.UseVisualStyleBackColor = true;
-            this.checkBox_FeedBack2.CheckedChanged += new System.EventHandler(this.SaveSettings);
+            this.tabPageRadio.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageRadio.Controls.Add(this.TrashButton);
+            this.tabPageRadio.Controls.Add(this.RadioComPortList);
+            this.tabPageRadio.Controls.Add(this.RadioBaudList);
+            this.tabPageRadio.Controls.Add(this.label1);
+            this.tabPageRadio.Controls.Add(this.label2);
+            this.tabPageRadio.Controls.Add(this.label5);
+            this.tabPageRadio.Controls.Add(this.RefreshUsbButton);
+            this.tabPageRadio.Controls.Add(this.RadioConnectButton);
+            this.tabPageRadio.Controls.Add(this.RadioDisconnectButton);
+            this.tabPageRadio.Controls.Add(this.DebugLogTextBox);
+            this.tabPageRadio.Controls.Add(this.RadioHexTextBox);
+            this.tabPageRadio.Controls.Add(this.label7);
+            this.tabPageRadio.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRadio.Name = "tabPageRadio";
+            this.tabPageRadio.Size = new System.Drawing.Size(603, 251);
+            this.tabPageRadio.TabIndex = 3;
+            this.tabPageRadio.Text = "Radio";
             // 
-            // ComPortNumber4
+            // TrashButton
             // 
-            this.ComPortNumber4.FormattingEnabled = true;
-            this.ComPortNumber4.Location = new System.Drawing.Point(93, 106);
-            this.ComPortNumber4.Name = "ComPortNumber4";
-            this.ComPortNumber4.Size = new System.Drawing.Size(97, 21);
-            this.ComPortNumber4.TabIndex = 15;
-            this.ComPortNumber4.SelectedIndexChanged += new System.EventHandler(this.SaveSettings);
+            this.TrashButton.Image = ((System.Drawing.Image)(resources.GetObject("TrashButton.Image")));
+            this.TrashButton.Location = new System.Drawing.Point(561, 202);
+            this.TrashButton.Name = "TrashButton";
+            this.TrashButton.Size = new System.Drawing.Size(34, 34);
+            this.TrashButton.TabIndex = 42;
+            this.TrashButton.UseVisualStyleBackColor = true;
+            this.TrashButton.Click += new System.EventHandler(this.TrashButton_Click);
             // 
-            // ComPortNumber3
+            // RadioComPortList
             // 
-            this.ComPortNumber3.FormattingEnabled = true;
-            this.ComPortNumber3.Location = new System.Drawing.Point(93, 79);
-            this.ComPortNumber3.Name = "ComPortNumber3";
-            this.ComPortNumber3.Size = new System.Drawing.Size(97, 21);
-            this.ComPortNumber3.TabIndex = 12;
-            this.ComPortNumber3.SelectedIndexChanged += new System.EventHandler(this.SaveSettings);
+            this.RadioComPortList.FormattingEnabled = true;
+            this.RadioComPortList.Location = new System.Drawing.Point(11, 34);
+            this.RadioComPortList.Name = "RadioComPortList";
+            this.RadioComPortList.Size = new System.Drawing.Size(97, 21);
+            this.RadioComPortList.TabIndex = 25;
             // 
-            // ComPortNumber2
+            // RadioBaudList
             // 
-            this.ComPortNumber2.FormattingEnabled = true;
-            this.ComPortNumber2.Location = new System.Drawing.Point(93, 52);
-            this.ComPortNumber2.Name = "ComPortNumber2";
-            this.ComPortNumber2.Size = new System.Drawing.Size(97, 21);
-            this.ComPortNumber2.TabIndex = 6;
-            this.ComPortNumber2.SelectedIndexChanged += new System.EventHandler(this.SaveSettings);
-            // 
-            // BaudComboBox
-            // 
-            this.BaudComboBox.FormattingEnabled = true;
-            this.BaudComboBox.Items.AddRange(new object[] {
+            this.RadioBaudList.FormattingEnabled = true;
+            this.RadioBaudList.Items.AddRange(new object[] {
             "1200",
             "2400",
             "4800",
@@ -443,285 +271,356 @@
             "38400",
             "57600",
             "115200"});
-            this.BaudComboBox.Location = new System.Drawing.Point(199, 26);
-            this.BaudComboBox.Name = "BaudComboBox";
-            this.BaudComboBox.Size = new System.Drawing.Size(62, 21);
-            this.BaudComboBox.TabIndex = 1;
-            this.BaudComboBox.SelectedIndexChanged += new System.EventHandler(this.SaveSettings);
+            this.RadioBaudList.Location = new System.Drawing.Point(117, 34);
+            this.RadioBaudList.Name = "RadioBaudList";
+            this.RadioBaudList.Size = new System.Drawing.Size(62, 21);
+            this.RadioBaudList.TabIndex = 26;
             // 
-            // ComPortNumber1
+            // label1
             // 
-            this.ComPortNumber1.FormattingEnabled = true;
-            this.ComPortNumber1.Location = new System.Drawing.Point(93, 26);
-            this.ComPortNumber1.Name = "ComPortNumber1";
-            this.ComPortNumber1.Size = new System.Drawing.Size(97, 21);
-            this.ComPortNumber1.TabIndex = 0;
-            this.ComPortNumber1.SelectedIndexChanged += new System.EventHandler(this.SaveSettings);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Com Port";
             // 
-            // SoundButton
+            // label2
             // 
-            this.SoundButton.Image = ((System.Drawing.Image)(resources.GetObject("SoundButton.Image")));
-            this.SoundButton.Location = new System.Drawing.Point(56, 379);
-            this.SoundButton.Name = "SoundButton";
-            this.SoundButton.Size = new System.Drawing.Size(34, 34);
-            this.SoundButton.TabIndex = 35;
-            this.SoundButton.UseVisualStyleBackColor = true;
-            this.SoundButton.Click += new System.EventHandler(this.DevButtonClick);
-            // 
-            // DeviceButton
-            // 
-            this.DeviceButton.Image = ((System.Drawing.Image)(resources.GetObject("DeviceButton.Image")));
-            this.DeviceButton.Location = new System.Drawing.Point(96, 379);
-            this.DeviceButton.Name = "DeviceButton";
-            this.DeviceButton.Size = new System.Drawing.Size(34, 34);
-            this.DeviceButton.TabIndex = 36;
-            this.DeviceButton.UseVisualStyleBackColor = true;
-            this.DeviceButton.Click += new System.EventHandler(this.SoundButtonClick);
-            // 
-            // com0comButton
-            // 
-            this.com0comButton.Image = ((System.Drawing.Image)(resources.GetObject("com0comButton.Image")));
-            this.com0comButton.Location = new System.Drawing.Point(16, 379);
-            this.com0comButton.Name = "com0comButton";
-            this.com0comButton.Size = new System.Drawing.Size(34, 34);
-            this.com0comButton.TabIndex = 37;
-            this.com0comButton.UseVisualStyleBackColor = true;
-            this.com0comButton.Click += new System.EventHandler(this.Com0comButtonClick);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPageComPort);
-            this.tabControl1.Controls.Add(this.tabPageSettings);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(1, 8);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(611, 365);
-            this.tabControl1.TabIndex = 38;
-            // 
-            // tabPageComPort
-            // 
-            this.tabPageComPort.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageComPort.Controls.Add(this.label5);
-            this.tabPageComPort.Controls.Add(this.ComPortDisconnect2);
-            this.tabPageComPort.Controls.Add(this.ComPortNumber1);
-            this.tabPageComPort.Controls.Add(this.BaudComboBox);
-            this.tabPageComPort.Controls.Add(this.label1);
-            this.tabPageComPort.Controls.Add(this.label2);
-            this.tabPageComPort.Controls.Add(this.label3);
-            this.tabPageComPort.Controls.Add(this.ComPortConnect1);
-            this.tabPageComPort.Controls.Add(this.ComPortDisconnect1);
-            this.tabPageComPort.Controls.Add(this.ComPortNumber2);
-            this.tabPageComPort.Controls.Add(this.label_port_name2);
-            this.tabPageComPort.Controls.Add(this.ComPortConnect2);
-            this.tabPageComPort.Controls.Add(this.ComPortNumber3);
-            this.tabPageComPort.Controls.Add(this.label_port_name3);
-            this.tabPageComPort.Controls.Add(this.textBox_hex);
-            this.tabPageComPort.Controls.Add(this.textBox1);
-            this.tabPageComPort.Controls.Add(this.ComPortConnect3);
-            this.tabPageComPort.Controls.Add(this.label7);
-            this.tabPageComPort.Controls.Add(this.ComPortDisconnect3);
-            this.tabPageComPort.Controls.Add(this.ComPortNumber4);
-            this.tabPageComPort.Controls.Add(this.label_port_name4);
-            this.tabPageComPort.Controls.Add(this.ComPortConnect4);
-            this.tabPageComPort.Controls.Add(this.ComPortDisconnect4);
-            this.tabPageComPort.Location = new System.Drawing.Point(4, 22);
-            this.tabPageComPort.Name = "tabPageComPort";
-            this.tabPageComPort.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageComPort.Size = new System.Drawing.Size(603, 339);
-            this.tabPageComPort.TabIndex = 0;
-            this.tabPageComPort.Text = "Main";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(114, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "Baud";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 146);
+            this.label5.Location = new System.Drawing.Point(7, 65);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(101, 13);
             this.label5.TabIndex = 25;
             this.label5.Text = "Communications log";
             // 
-            // tabPageSettings
+            // RefreshUsbButton
             // 
-            this.tabPageSettings.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageSettings.Controls.Add(this.checkBoxSaveAppData);
-            this.tabPageSettings.Controls.Add(this.groupBox4);
-            this.tabPageSettings.Controls.Add(this.groupBox3);
-            this.tabPageSettings.Controls.Add(this.groupBox2);
-            this.tabPageSettings.Controls.Add(this.groupBox1);
-            this.tabPageSettings.Controls.Add(this.label9);
-            this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSettings.Name = "tabPageSettings";
-            this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSettings.Size = new System.Drawing.Size(603, 339);
-            this.tabPageSettings.TabIndex = 1;
-            this.tabPageSettings.Text = "Settings";
+            this.RefreshUsbButton.Image = ((System.Drawing.Image)(resources.GetObject("RefreshUsbButton.Image")));
+            this.RefreshUsbButton.Location = new System.Drawing.Point(561, 162);
+            this.RefreshUsbButton.Name = "RefreshUsbButton";
+            this.RefreshUsbButton.Size = new System.Drawing.Size(34, 34);
+            this.RefreshUsbButton.TabIndex = 41;
+            this.RefreshUsbButton.UseVisualStyleBackColor = true;
+            this.RefreshUsbButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
-            // checkBoxSaveAppData
+            // RadioConnectButton
             // 
-            this.checkBoxSaveAppData.AutoSize = true;
-            this.checkBoxSaveAppData.Location = new System.Drawing.Point(17, 179);
-            this.checkBoxSaveAppData.Name = "checkBoxSaveAppData";
-            this.checkBoxSaveAppData.Size = new System.Drawing.Size(158, 17);
-            this.checkBoxSaveAppData.TabIndex = 40;
-            this.checkBoxSaveAppData.Text = "Turn off settings in AppData";
-            this.checkBoxSaveAppData.UseVisualStyleBackColor = true;
+            this.RadioConnectButton.Location = new System.Drawing.Point(262, 31);
+            this.RadioConnectButton.Name = "RadioConnectButton";
+            this.RadioConnectButton.Size = new System.Drawing.Size(72, 23);
+            this.RadioConnectButton.TabIndex = 29;
+            this.RadioConnectButton.Text = "Connect";
+            this.RadioConnectButton.UseVisualStyleBackColor = true;
+            this.RadioConnectButton.Click += new System.EventHandler(this.RadioConnect);
             // 
-            // groupBox4
+            // RadioDisconnectButton
             // 
-            this.groupBox4.Controls.Add(this.label4);
-            this.groupBox4.Controls.Add(this.textBox_Ptt_timeout);
-            this.groupBox4.Controls.Add(this.checkBoxForceCIV);
-            this.groupBox4.Controls.Add(this.checkBox_PTT_RTS);
-            this.groupBox4.Controls.Add(this.checkBox_PTT_CIV);
-            this.groupBox4.Location = new System.Drawing.Point(11, 6);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(141, 166);
-            this.groupBox4.TabIndex = 38;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Radio";
+            this.RadioDisconnectButton.Enabled = false;
+            this.RadioDisconnectButton.Location = new System.Drawing.Point(340, 31);
+            this.RadioDisconnectButton.Name = "RadioDisconnectButton";
+            this.RadioDisconnectButton.Size = new System.Drawing.Size(72, 23);
+            this.RadioDisconnectButton.TabIndex = 30;
+            this.RadioDisconnectButton.Text = "Disconnect";
+            this.RadioDisconnectButton.UseVisualStyleBackColor = true;
+            this.RadioDisconnectButton.Click += new System.EventHandler(this.RadioDisconnect);
             // 
-            // label4
+            // RadioHexTextBox
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 92);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 13);
-            this.label4.TabIndex = 41;
-            this.label4.Text = "PTT timeout (s)";
+            this.RadioHexTextBox.Location = new System.Drawing.Point(186, 34);
+            this.RadioHexTextBox.Name = "RadioHexTextBox";
+            this.RadioHexTextBox.Size = new System.Drawing.Size(25, 20);
+            this.RadioHexTextBox.TabIndex = 32;
             // 
-            // textBox_Ptt_timeout
+            // label7
             // 
-            this.textBox_Ptt_timeout.Location = new System.Drawing.Point(6, 89);
-            this.textBox_Ptt_timeout.MaxLength = 5;
-            this.textBox_Ptt_timeout.Name = "textBox_Ptt_timeout";
-            this.textBox_Ptt_timeout.Size = new System.Drawing.Size(28, 20);
-            this.textBox_Ptt_timeout.TabIndex = 32;
-            this.textBox_Ptt_timeout.Text = "300";
-            this.textBox_Ptt_timeout.TextChanged += new System.EventHandler(this.TextBox_Ptt_timeout_TextChanged);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(186, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(68, 13);
+            this.label7.TabIndex = 31;
+            this.label7.Text = "CI-V Address";
             // 
-            // checkBoxForceCIV
+            // tabPageProgram
             // 
-            this.checkBoxForceCIV.AutoSize = true;
-            this.checkBoxForceCIV.Location = new System.Drawing.Point(6, 66);
-            this.checkBoxForceCIV.Name = "checkBoxForceCIV";
-            this.checkBoxForceCIV.Size = new System.Drawing.Size(117, 17);
-            this.checkBoxForceCIV.TabIndex = 31;
-            this.checkBoxForceCIV.Text = "Force CI-V Address";
-            this.checkBoxForceCIV.UseVisualStyleBackColor = true;
-            this.checkBoxForceCIV.CheckedChanged += new System.EventHandler(this.SaveSettings);
+            this.tabPageProgram.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageProgram.Controls.Add(this.groupBox3);
+            this.tabPageProgram.Controls.Add(this.groupBox2);
+            this.tabPageProgram.Controls.Add(this.groupBox1);
+            this.tabPageProgram.Controls.Add(this.label9);
+            this.tabPageProgram.Location = new System.Drawing.Point(4, 22);
+            this.tabPageProgram.Name = "tabPageProgram";
+            this.tabPageProgram.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProgram.Size = new System.Drawing.Size(603, 251);
+            this.tabPageProgram.TabIndex = 1;
+            this.tabPageProgram.Text = "Program";
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox_port_name4);
-            this.groupBox3.Controls.Add(this.checkBox_FeedBack4);
-            this.groupBox3.Location = new System.Drawing.Point(452, 6);
+            this.groupBox3.Controls.Add(this.Program3infoBox);
+            this.groupBox3.Controls.Add(this.Program3DisconnectButton);
+            this.groupBox3.Controls.Add(this.label29);
+            this.groupBox3.Controls.Add(this.Program3NameTextBox);
+            this.groupBox3.Controls.Add(this.Program3ConnectButton);
+            this.groupBox3.Controls.Add(this.Program3FeedBackCheckBox);
+            this.groupBox3.Controls.Add(this.Program3Com0comList);
+            this.groupBox3.Location = new System.Drawing.Point(406, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(141, 166);
+            this.groupBox3.Size = new System.Drawing.Size(191, 268);
             this.groupBox3.TabIndex = 37;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Program 3";
             // 
-            // textBox_port_name4
+            // Program3infoBox
             // 
-            this.textBox_port_name4.Location = new System.Drawing.Point(6, 16);
-            this.textBox_port_name4.MaxLength = 15;
-            this.textBox_port_name4.Name = "textBox_port_name4";
-            this.textBox_port_name4.Size = new System.Drawing.Size(100, 20);
-            this.textBox_port_name4.TabIndex = 28;
-            this.textBox_port_name4.TextChanged += new System.EventHandler(this.TextBox_port_name4_TextChanged);
+            this.Program3infoBox.BackColor = System.Drawing.SystemColors.Control;
+            this.Program3infoBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Program3infoBox.Location = new System.Drawing.Point(6, 115);
+            this.Program3infoBox.Multiline = true;
+            this.Program3infoBox.Name = "Program3infoBox";
+            this.Program3infoBox.ReadOnly = true;
+            this.Program3infoBox.Size = new System.Drawing.Size(174, 92);
+            this.Program3infoBox.TabIndex = 47;
+            this.Program3infoBox.TabStop = false;
+            // 
+            // Program3DisconnectButton
+            // 
+            this.Program3DisconnectButton.Enabled = false;
+            this.Program3DisconnectButton.Location = new System.Drawing.Point(87, 213);
+            this.Program3DisconnectButton.Name = "Program3DisconnectButton";
+            this.Program3DisconnectButton.Size = new System.Drawing.Size(72, 23);
+            this.Program3DisconnectButton.TabIndex = 49;
+            this.Program3DisconnectButton.Text = "Disconnect";
+            this.Program3DisconnectButton.UseVisualStyleBackColor = true;
+            this.Program3DisconnectButton.Click += new System.EventHandler(this.Program3Disconnect);
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(6, 70);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(53, 13);
+            this.label29.TabIndex = 44;
+            this.label29.Text = "com0com";
+            // 
+            // Program3NameTextBox
+            // 
+            this.Program3NameTextBox.Location = new System.Drawing.Point(6, 16);
+            this.Program3NameTextBox.MaxLength = 15;
+            this.Program3NameTextBox.Name = "Program3NameTextBox";
+            this.Program3NameTextBox.Size = new System.Drawing.Size(174, 20);
+            this.Program3NameTextBox.TabIndex = 28;
+            this.Program3NameTextBox.TextChanged += new System.EventHandler(this.ProgramName_Update);
+            // 
+            // Program3ConnectButton
+            // 
+            this.Program3ConnectButton.Location = new System.Drawing.Point(9, 213);
+            this.Program3ConnectButton.Name = "Program3ConnectButton";
+            this.Program3ConnectButton.Size = new System.Drawing.Size(72, 23);
+            this.Program3ConnectButton.TabIndex = 48;
+            this.Program3ConnectButton.Text = "Connect";
+            this.Program3ConnectButton.UseVisualStyleBackColor = true;
+            this.Program3ConnectButton.Click += new System.EventHandler(this.Program3Connect);
+            // 
+            // Program3Com0comList
+            // 
+            this.Program3Com0comList.FormattingEnabled = true;
+            this.Program3Com0comList.Location = new System.Drawing.Point(6, 86);
+            this.Program3Com0comList.Name = "Program3Com0comList";
+            this.Program3Com0comList.Size = new System.Drawing.Size(175, 21);
+            this.Program3Com0comList.TabIndex = 47;
+            this.Program3Com0comList.SelectedIndexChanged += new System.EventHandler(this.ProgramInfoBoxes_Update);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox_port_name3);
-            this.groupBox2.Controls.Add(this.checkBox_FeedBack3);
-            this.groupBox2.Location = new System.Drawing.Point(305, 6);
+            this.groupBox2.Controls.Add(this.Program2infoBox);
+            this.groupBox2.Controls.Add(this.Program2DisconnectButton);
+            this.groupBox2.Controls.Add(this.label28);
+            this.groupBox2.Controls.Add(this.Program2ConnectButton);
+            this.groupBox2.Controls.Add(this.Program2NameTextBox);
+            this.groupBox2.Controls.Add(this.Program2Com0comList);
+            this.groupBox2.Controls.Add(this.Program2FeedBackCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(210, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(141, 166);
+            this.groupBox2.Size = new System.Drawing.Size(187, 268);
             this.groupBox2.TabIndex = 36;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Program 2";
             // 
-            // textBox_port_name3
+            // Program2infoBox
             // 
-            this.textBox_port_name3.Location = new System.Drawing.Point(6, 16);
-            this.textBox_port_name3.MaxLength = 15;
-            this.textBox_port_name3.Name = "textBox_port_name3";
-            this.textBox_port_name3.Size = new System.Drawing.Size(100, 20);
-            this.textBox_port_name3.TabIndex = 27;
-            this.textBox_port_name3.TextChanged += new System.EventHandler(this.TextBox_port_name3_TextChanged);
+            this.Program2infoBox.BackColor = System.Drawing.SystemColors.Control;
+            this.Program2infoBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Program2infoBox.Location = new System.Drawing.Point(6, 115);
+            this.Program2infoBox.Multiline = true;
+            this.Program2infoBox.Name = "Program2infoBox";
+            this.Program2infoBox.ReadOnly = true;
+            this.Program2infoBox.Size = new System.Drawing.Size(174, 92);
+            this.Program2infoBox.TabIndex = 45;
+            this.Program2infoBox.TabStop = false;
+            // 
+            // Program2DisconnectButton
+            // 
+            this.Program2DisconnectButton.Enabled = false;
+            this.Program2DisconnectButton.Location = new System.Drawing.Point(83, 213);
+            this.Program2DisconnectButton.Name = "Program2DisconnectButton";
+            this.Program2DisconnectButton.Size = new System.Drawing.Size(72, 23);
+            this.Program2DisconnectButton.TabIndex = 46;
+            this.Program2DisconnectButton.Text = "Disconnect";
+            this.Program2DisconnectButton.UseVisualStyleBackColor = true;
+            this.Program2DisconnectButton.Click += new System.EventHandler(this.Program2Disconnect);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(6, 70);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(53, 13);
+            this.label28.TabIndex = 43;
+            this.label28.Text = "com0com";
+            // 
+            // Program2ConnectButton
+            // 
+            this.Program2ConnectButton.Location = new System.Drawing.Point(5, 213);
+            this.Program2ConnectButton.Name = "Program2ConnectButton";
+            this.Program2ConnectButton.Size = new System.Drawing.Size(72, 23);
+            this.Program2ConnectButton.TabIndex = 45;
+            this.Program2ConnectButton.Text = "Connect";
+            this.Program2ConnectButton.UseVisualStyleBackColor = true;
+            this.Program2ConnectButton.Click += new System.EventHandler(this.Program2Connect);
+            // 
+            // Program2NameTextBox
+            // 
+            this.Program2NameTextBox.Location = new System.Drawing.Point(6, 16);
+            this.Program2NameTextBox.MaxLength = 15;
+            this.Program2NameTextBox.Name = "Program2NameTextBox";
+            this.Program2NameTextBox.Size = new System.Drawing.Size(174, 20);
+            this.Program2NameTextBox.TabIndex = 27;
+            this.Program2NameTextBox.TextChanged += new System.EventHandler(this.ProgramName_Update);
+            // 
+            // Program2Com0comList
+            // 
+            this.Program2Com0comList.FormattingEnabled = true;
+            this.Program2Com0comList.Location = new System.Drawing.Point(6, 86);
+            this.Program2Com0comList.Name = "Program2Com0comList";
+            this.Program2Com0comList.Size = new System.Drawing.Size(175, 21);
+            this.Program2Com0comList.TabIndex = 44;
+            this.Program2Com0comList.SelectedIndexChanged += new System.EventHandler(this.ProgramInfoBoxes_Update);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox_port_name2);
-            this.groupBox1.Controls.Add(this.checkBox_FeedBack2);
-            this.groupBox1.Location = new System.Drawing.Point(158, 6);
+            this.groupBox1.Controls.Add(this.Program1infoBox);
+            this.groupBox1.Controls.Add(this.Program1DisconnectButton);
+            this.groupBox1.Controls.Add(this.label27);
+            this.groupBox1.Controls.Add(this.Program1ConnectButton);
+            this.groupBox1.Controls.Add(this.Program1NameTextBox);
+            this.groupBox1.Controls.Add(this.Program1Com0comList);
+            this.groupBox1.Controls.Add(this.Program1FeedBackCheckBox);
+            this.groupBox1.Location = new System.Drawing.Point(4, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(141, 166);
+            this.groupBox1.Size = new System.Drawing.Size(187, 268);
             this.groupBox1.TabIndex = 35;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Program 1";
             // 
-            // textBox_port_name2
+            // Program1infoBox
             // 
-            this.textBox_port_name2.Location = new System.Drawing.Point(7, 16);
-            this.textBox_port_name2.MaxLength = 15;
-            this.textBox_port_name2.Name = "textBox_port_name2";
-            this.textBox_port_name2.Size = new System.Drawing.Size(100, 20);
-            this.textBox_port_name2.TabIndex = 26;
-            this.textBox_port_name2.TextChanged += new System.EventHandler(this.TextBox_port_name2_TextChanged);
+            this.Program1infoBox.BackColor = System.Drawing.SystemColors.Control;
+            this.Program1infoBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Program1infoBox.Location = new System.Drawing.Point(7, 115);
+            this.Program1infoBox.Multiline = true;
+            this.Program1infoBox.Name = "Program1infoBox";
+            this.Program1infoBox.ReadOnly = true;
+            this.Program1infoBox.Size = new System.Drawing.Size(174, 92);
+            this.Program1infoBox.TabIndex = 44;
+            this.Program1infoBox.TabStop = false;
             // 
-            // tabPage3
+            // Program1DisconnectButton
             // 
-            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage3.Controls.Add(this.label24);
-            this.tabPage3.Controls.Add(this.label26);
-            this.tabPage3.Controls.Add(this.textBoxDLTimeOut);
-            this.tabPage3.Controls.Add(this.label22);
-            this.tabPage3.Controls.Add(this.label21);
-            this.tabPage3.Controls.Add(this.groupBox5);
-            this.tabPage3.Controls.Add(this.buttonStopDummyLoad);
-            this.tabPage3.Controls.Add(this.buttonStartDummyLoad);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(603, 339);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "TX-Frequency-Test";
+            this.Program1DisconnectButton.Enabled = false;
+            this.Program1DisconnectButton.Location = new System.Drawing.Point(84, 213);
+            this.Program1DisconnectButton.Name = "Program1DisconnectButton";
+            this.Program1DisconnectButton.Size = new System.Drawing.Size(72, 23);
+            this.Program1DisconnectButton.TabIndex = 43;
+            this.Program1DisconnectButton.Text = "Disconnect";
+            this.Program1DisconnectButton.UseVisualStyleBackColor = true;
+            this.Program1DisconnectButton.Click += new System.EventHandler(this.Program1Disconnect);
             // 
-            // label24
+            // label27
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(27, 179);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(343, 52);
-            this.label24.TabIndex = 34;
-            this.label24.Text = resources.GetString("label24.Text");
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(6, 70);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(53, 13);
+            this.label27.TabIndex = 42;
+            this.label27.Text = "com0com";
             // 
-            // label26
+            // Program1ConnectButton
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(386, 66);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(61, 13);
-            this.label26.TabIndex = 33;
-            this.label26.Text = "TimeOut (s)";
+            this.Program1ConnectButton.Location = new System.Drawing.Point(6, 213);
+            this.Program1ConnectButton.Name = "Program1ConnectButton";
+            this.Program1ConnectButton.Size = new System.Drawing.Size(72, 23);
+            this.Program1ConnectButton.TabIndex = 42;
+            this.Program1ConnectButton.Text = "Connect";
+            this.Program1ConnectButton.UseVisualStyleBackColor = true;
+            this.Program1ConnectButton.Click += new System.EventHandler(this.Program1Connect);
             // 
-            // textBoxDLTimeOut
+            // Program1NameTextBox
             // 
-            this.textBoxDLTimeOut.Location = new System.Drawing.Point(448, 59);
-            this.textBoxDLTimeOut.Name = "textBoxDLTimeOut";
-            this.textBoxDLTimeOut.Size = new System.Drawing.Size(38, 20);
-            this.textBoxDLTimeOut.TabIndex = 31;
-            this.textBoxDLTimeOut.Text = "60";
-            this.textBoxDLTimeOut.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBoxDLTimeOut.TextChanged += new System.EventHandler(this.textBoxDLTimeOut_TextChanged);
+            this.Program1NameTextBox.Location = new System.Drawing.Point(7, 16);
+            this.Program1NameTextBox.MaxLength = 15;
+            this.Program1NameTextBox.Name = "Program1NameTextBox";
+            this.Program1NameTextBox.Size = new System.Drawing.Size(174, 20);
+            this.Program1NameTextBox.TabIndex = 26;
+            this.Program1NameTextBox.TextChanged += new System.EventHandler(this.ProgramName_Update);
+            // 
+            // Program1Com0comList
+            // 
+            this.Program1Com0comList.FormattingEnabled = true;
+            this.Program1Com0comList.Location = new System.Drawing.Point(6, 86);
+            this.Program1Com0comList.Name = "Program1Com0comList";
+            this.Program1Com0comList.Size = new System.Drawing.Size(175, 21);
+            this.Program1Com0comList.TabIndex = 41;
+            this.Program1Com0comList.SelectedIndexChanged += new System.EventHandler(this.ProgramInfoBoxes_Update);
+            // 
+            // tabPageTone
+            // 
+            this.tabPageTone.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageTone.Controls.Add(this.toneInfoBox);
+            this.tabPageTone.Controls.Add(this.label22);
+            this.tabPageTone.Controls.Add(this.label21);
+            this.tabPageTone.Controls.Add(this.groupBox5);
+            this.tabPageTone.Controls.Add(this.StopDummyLoadButton);
+            this.tabPageTone.Controls.Add(this.StartDummyLoadButton);
+            this.tabPageTone.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTone.Name = "tabPageTone";
+            this.tabPageTone.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTone.Size = new System.Drawing.Size(603, 251);
+            this.tabPageTone.TabIndex = 2;
+            this.tabPageTone.Text = "TX-Tone-Test";
+            // 
+            // toneInfoBox
+            // 
+            this.toneInfoBox.AutoSize = true;
+            this.toneInfoBox.Location = new System.Drawing.Point(27, 169);
+            this.toneInfoBox.Name = "toneInfoBox";
+            this.toneInfoBox.Size = new System.Drawing.Size(0, 13);
+            this.toneInfoBox.TabIndex = 34;
             // 
             // label22
             // 
             this.label22.AutoSize = true;
             this.label22.BackColor = System.Drawing.Color.Aqua;
-            this.label22.Location = new System.Drawing.Point(27, 265);
+            this.label22.Location = new System.Drawing.Point(372, 53);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(204, 13);
             this.label22.TabIndex = 29;
@@ -731,7 +630,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.BackColor = System.Drawing.Color.Lime;
-            this.label21.Location = new System.Drawing.Point(27, 240);
+            this.label21.Location = new System.Drawing.Point(372, 32);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(213, 13);
             this.label21.TabIndex = 28;
@@ -1053,9 +952,9 @@
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.Location = new System.Drawing.Point(15, 16);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(111, 24);
+            this.label16.Size = new System.Drawing.Size(59, 24);
             this.label16.TabIndex = 26;
-            this.label16.Text = "Frequency";
+            this.label16.Text = "Tone";
             // 
             // label6
             // 
@@ -1211,152 +1110,356 @@
             this.checkBox_DL_0400.TabIndex = 13;
             this.checkBox_DL_0400.UseVisualStyleBackColor = true;
             // 
-            // buttonStopDummyLoad
+            // StopDummyLoadButton
             // 
-            this.buttonStopDummyLoad.Enabled = false;
-            this.buttonStopDummyLoad.Location = new System.Drawing.Point(448, 249);
-            this.buttonStopDummyLoad.Name = "buttonStopDummyLoad";
-            this.buttonStopDummyLoad.Size = new System.Drawing.Size(53, 44);
-            this.buttonStopDummyLoad.TabIndex = 23;
-            this.buttonStopDummyLoad.Text = "STOP";
-            this.buttonStopDummyLoad.UseVisualStyleBackColor = true;
-            this.buttonStopDummyLoad.Click += new System.EventHandler(this.button2_Click);
+            this.StopDummyLoadButton.Enabled = false;
+            this.StopDummyLoadButton.Location = new System.Drawing.Point(499, 177);
+            this.StopDummyLoadButton.Name = "StopDummyLoadButton";
+            this.StopDummyLoadButton.Size = new System.Drawing.Size(53, 44);
+            this.StopDummyLoadButton.TabIndex = 23;
+            this.StopDummyLoadButton.Text = "STOP";
+            this.StopDummyLoadButton.UseVisualStyleBackColor = true;
+            this.StopDummyLoadButton.Click += new System.EventHandler(this.StopDummyLoad_Click);
             // 
-            // buttonStartDummyLoad
+            // StartDummyLoadButton
             // 
-            this.buttonStartDummyLoad.Enabled = false;
-            this.buttonStartDummyLoad.Location = new System.Drawing.Point(375, 249);
-            this.buttonStartDummyLoad.Name = "buttonStartDummyLoad";
-            this.buttonStartDummyLoad.Size = new System.Drawing.Size(53, 44);
-            this.buttonStartDummyLoad.TabIndex = 22;
-            this.buttonStartDummyLoad.Text = "RUN";
-            this.buttonStartDummyLoad.UseVisualStyleBackColor = true;
-            this.buttonStartDummyLoad.Click += new System.EventHandler(this.button1_Click);
+            this.StartDummyLoadButton.Enabled = false;
+            this.StartDummyLoadButton.Location = new System.Drawing.Point(426, 177);
+            this.StartDummyLoadButton.Name = "StartDummyLoadButton";
+            this.StartDummyLoadButton.Size = new System.Drawing.Size(53, 44);
+            this.StartDummyLoadButton.TabIndex = 22;
+            this.StartDummyLoadButton.Text = "RUN";
+            this.StartDummyLoadButton.UseVisualStyleBackColor = true;
+            this.StartDummyLoadButton.Click += new System.EventHandler(this.StartDummyLoad_Click);
+            // 
+            // tabPageSettings
+            // 
+            this.tabPageSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageSettings.Controls.Add(this.OpenExplorerForConfigFileButton);
+            this.tabPageSettings.Controls.Add(this.ShowToneTestButton);
+            this.tabPageSettings.Controls.Add(this.LogTimeCheckBox);
+            this.tabPageSettings.Controls.Add(this.LogDateCheckBox);
+            this.tabPageSettings.Controls.Add(this.label3);
+            this.tabPageSettings.Controls.Add(this.label4);
+            this.tabPageSettings.Controls.Add(this.label26);
+            this.tabPageSettings.Controls.Add(this.DeviceButton);
+            this.tabPageSettings.Controls.Add(this.com0comButton);
+            this.tabPageSettings.Controls.Add(this.SoundButton);
+            this.tabPageSettings.Controls.Add(this.checkBoxForceCIV);
+            this.tabPageSettings.Controls.Add(this.DebugLogLinesTextBox);
+            this.tabPageSettings.Controls.Add(this.RadioTxTimeoutTextBox);
+            this.tabPageSettings.Controls.Add(this.ToneLengthBox);
+            this.tabPageSettings.Controls.Add(this.checkBoxSaveAppData);
+            this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSettings.Name = "tabPageSettings";
+            this.tabPageSettings.Size = new System.Drawing.Size(603, 251);
+            this.tabPageSettings.TabIndex = 4;
+            this.tabPageSettings.Text = "Settings";
+            // 
+            // OpenExplorerForConfigFileButton
+            // 
+            this.OpenExplorerForConfigFileButton.Image = global::Icom_Proxy.Properties.Resources.open_folder_24;
+            this.OpenExplorerForConfigFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.OpenExplorerForConfigFileButton.Location = new System.Drawing.Point(499, 128);
+            this.OpenExplorerForConfigFileButton.Name = "OpenExplorerForConfigFileButton";
+            this.OpenExplorerForConfigFileButton.Size = new System.Drawing.Size(99, 34);
+            this.OpenExplorerForConfigFileButton.TabIndex = 52;
+            this.OpenExplorerForConfigFileButton.Text = "Config file";
+            this.OpenExplorerForConfigFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.OpenExplorerForConfigFileButton.UseVisualStyleBackColor = true;
+            this.OpenExplorerForConfigFileButton.Click += new System.EventHandler(this.OpenExplorerForConfigFile);
+            // 
+            // ShowToneTestButton
+            // 
+            this.ShowToneTestButton.Image = global::Icom_Proxy.Properties.Resources.ToneTest;
+            this.ShowToneTestButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ShowToneTestButton.Location = new System.Drawing.Point(499, 168);
+            this.ShowToneTestButton.Name = "ShowToneTestButton";
+            this.ShowToneTestButton.Size = new System.Drawing.Size(99, 34);
+            this.ShowToneTestButton.TabIndex = 57;
+            this.ShowToneTestButton.Text = "Tone-Test";
+            this.ShowToneTestButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ShowToneTestButton.UseVisualStyleBackColor = true;
+            this.ShowToneTestButton.Click += new System.EventHandler(this.ShowToneTestButton_Click);
+            // 
+            // LogTimeCheckBox
+            // 
+            this.LogTimeCheckBox.AutoSize = true;
+            this.LogTimeCheckBox.Checked = true;
+            this.LogTimeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.LogTimeCheckBox.Location = new System.Drawing.Point(8, 82);
+            this.LogTimeCheckBox.Name = "LogTimeCheckBox";
+            this.LogTimeCheckBox.Size = new System.Drawing.Size(132, 17);
+            this.LogTimeCheckBox.TabIndex = 56;
+            this.LogTimeCheckBox.Text = "Log TimeStamp - Time";
+            this.LogTimeCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // LogDateCheckBox
+            // 
+            this.LogDateCheckBox.AutoSize = true;
+            this.LogDateCheckBox.Location = new System.Drawing.Point(8, 59);
+            this.LogDateCheckBox.Name = "LogDateCheckBox";
+            this.LogDateCheckBox.Size = new System.Drawing.Size(132, 17);
+            this.LogDateCheckBox.TabIndex = 55;
+            this.LogDateCheckBox.Text = "Log TimeStamp - Date";
+            this.LogDateCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(217, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 54;
+            this.label3.Text = "Log Lines";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(217, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 13);
+            this.label4.TabIndex = 46;
+            this.label4.Text = "TX timeout (s)";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(217, 63);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(78, 13);
+            this.label26.TabIndex = 33;
+            this.label26.Text = "Tone length (s)";
+            // 
+            // DeviceButton
+            // 
+            this.DeviceButton.Image = ((System.Drawing.Image)(resources.GetObject("DeviceButton.Image")));
+            this.DeviceButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DeviceButton.Location = new System.Drawing.Point(499, 88);
+            this.DeviceButton.Name = "DeviceButton";
+            this.DeviceButton.Size = new System.Drawing.Size(99, 34);
+            this.DeviceButton.TabIndex = 36;
+            this.DeviceButton.Text = "Device";
+            this.DeviceButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.DeviceButton.UseVisualStyleBackColor = true;
+            this.DeviceButton.Click += new System.EventHandler(this.SoundButtonClick);
+            // 
+            // com0comButton
+            // 
+            this.com0comButton.Image = ((System.Drawing.Image)(resources.GetObject("com0comButton.Image")));
+            this.com0comButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.com0comButton.Location = new System.Drawing.Point(499, 8);
+            this.com0comButton.Name = "com0comButton";
+            this.com0comButton.Size = new System.Drawing.Size(99, 34);
+            this.com0comButton.TabIndex = 37;
+            this.com0comButton.Text = "com0com";
+            this.com0comButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.com0comButton.UseVisualStyleBackColor = true;
+            this.com0comButton.Click += new System.EventHandler(this.Com0comButtonClick);
+            // 
+            // SoundButton
+            // 
+            this.SoundButton.Image = ((System.Drawing.Image)(resources.GetObject("SoundButton.Image")));
+            this.SoundButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SoundButton.Location = new System.Drawing.Point(499, 48);
+            this.SoundButton.Name = "SoundButton";
+            this.SoundButton.Size = new System.Drawing.Size(99, 34);
+            this.SoundButton.TabIndex = 35;
+            this.SoundButton.Text = "Sound";
+            this.SoundButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.SoundButton.UseVisualStyleBackColor = true;
+            this.SoundButton.Click += new System.EventHandler(this.DevButtonClick);
+            // 
+            // checkBoxForceCIV
+            // 
+            this.checkBoxForceCIV.AutoSize = true;
+            this.checkBoxForceCIV.Location = new System.Drawing.Point(8, 13);
+            this.checkBoxForceCIV.Name = "checkBoxForceCIV";
+            this.checkBoxForceCIV.Size = new System.Drawing.Size(117, 17);
+            this.checkBoxForceCIV.TabIndex = 44;
+            this.checkBoxForceCIV.Text = "Force CI-V Address";
+            this.checkBoxForceCIV.UseVisualStyleBackColor = true;
+            // 
+            // DebugLogLinesTextBox
+            // 
+            this.DebugLogLinesTextBox.Location = new System.Drawing.Point(183, 36);
+            this.DebugLogLinesTextBox.Name = "DebugLogLinesTextBox";
+            this.DebugLogLinesTextBox.Size = new System.Drawing.Size(28, 20);
+            this.DebugLogLinesTextBox.TabIndex = 53;
+            this.DebugLogLinesTextBox.Text = "9";
+            this.DebugLogLinesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // RadioTxTimeoutTextBox
+            // 
+            this.RadioTxTimeoutTextBox.Location = new System.Drawing.Point(183, 11);
+            this.RadioTxTimeoutTextBox.MaxLength = 5;
+            this.RadioTxTimeoutTextBox.Name = "RadioTxTimeoutTextBox";
+            this.RadioTxTimeoutTextBox.Size = new System.Drawing.Size(28, 20);
+            this.RadioTxTimeoutTextBox.TabIndex = 45;
+            this.RadioTxTimeoutTextBox.Text = "300";
+            this.RadioTxTimeoutTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.RadioTxTimeoutTextBox.TextChanged += new System.EventHandler(this.RadioTxTimeoutTextBox_Changed);
+            // 
+            // ToneLengthBox
+            // 
+            this.ToneLengthBox.Location = new System.Drawing.Point(183, 60);
+            this.ToneLengthBox.Name = "ToneLengthBox";
+            this.ToneLengthBox.Size = new System.Drawing.Size(28, 20);
+            this.ToneLengthBox.TabIndex = 31;
+            this.ToneLengthBox.Text = "60";
+            this.ToneLengthBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ToneLengthBox.TextChanged += new System.EventHandler(this.TextBoxDLTimeOut_TextChanged);
+            // 
+            // checkBoxSaveAppData
+            // 
+            this.checkBoxSaveAppData.AutoSize = true;
+            this.checkBoxSaveAppData.Location = new System.Drawing.Point(8, 36);
+            this.checkBoxSaveAppData.Name = "checkBoxSaveAppData";
+            this.checkBoxSaveAppData.Size = new System.Drawing.Size(158, 17);
+            this.checkBoxSaveAppData.TabIndex = 40;
+            this.checkBoxSaveAppData.Text = "Turn off settings in AppData";
+            this.checkBoxSaveAppData.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label8.Location = new System.Drawing.Point(430, 8);
+            this.label8.Location = new System.Drawing.Point(439, 8);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(175, 16);
             this.label8.TabIndex = 40;
             this.label8.Text = "software @ SA6HBR . se";
             // 
-            // RefreshButton
+            // RadioLed
             // 
-            this.RefreshButton.Image = ((System.Drawing.Image)(resources.GetObject("RefreshButton.Image")));
-            this.RefreshButton.Location = new System.Drawing.Point(161, 379);
-            this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(34, 34);
-            this.RefreshButton.TabIndex = 41;
-            this.RefreshButton.UseVisualStyleBackColor = true;
-            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+            this.RadioLed.Enabled = false;
+            this.RadioLed.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RadioLed.Location = new System.Drawing.Point(399, 288);
+            this.RadioLed.Name = "RadioLed";
+            this.RadioLed.Size = new System.Drawing.Size(37, 34);
+            this.RadioLed.TabIndex = 47;
+            this.RadioLed.Text = "R";
+            this.RadioLed.UseVisualStyleBackColor = true;
             // 
-            // TrashButton
+            // Program1Led
             // 
-            this.TrashButton.Image = ((System.Drawing.Image)(resources.GetObject("TrashButton.Image")));
-            this.TrashButton.Location = new System.Drawing.Point(204, 379);
-            this.TrashButton.Name = "TrashButton";
-            this.TrashButton.Size = new System.Drawing.Size(34, 34);
-            this.TrashButton.TabIndex = 42;
-            this.TrashButton.UseVisualStyleBackColor = true;
-            this.TrashButton.Click += new System.EventHandler(this.TrashButton_Click);
+            this.Program1Led.Enabled = false;
+            this.Program1Led.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Program1Led.Location = new System.Drawing.Point(442, 288);
+            this.Program1Led.Name = "Program1Led";
+            this.Program1Led.Size = new System.Drawing.Size(37, 34);
+            this.Program1Led.TabIndex = 48;
+            this.Program1Led.Text = "P1";
+            this.Program1Led.UseVisualStyleBackColor = true;
+            // 
+            // Program2Led
+            // 
+            this.Program2Led.Enabled = false;
+            this.Program2Led.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Program2Led.Location = new System.Drawing.Point(485, 288);
+            this.Program2Led.Name = "Program2Led";
+            this.Program2Led.Size = new System.Drawing.Size(37, 34);
+            this.Program2Led.TabIndex = 49;
+            this.Program2Led.Text = "P2";
+            this.Program2Led.UseVisualStyleBackColor = true;
+            // 
+            // Program3Led
+            // 
+            this.Program3Led.Enabled = false;
+            this.Program3Led.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Program3Led.Location = new System.Drawing.Point(528, 288);
+            this.Program3Led.Name = "Program3Led";
+            this.Program3Led.Size = new System.Drawing.Size(37, 34);
+            this.Program3Led.TabIndex = 50;
+            this.Program3Led.Text = "P3";
+            this.Program3Led.UseVisualStyleBackColor = true;
+            // 
+            // TXButton
+            // 
+            this.TXButton.Enabled = false;
+            this.TXButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TXButton.Location = new System.Drawing.Point(568, 289);
+            this.TXButton.Name = "TXButton";
+            this.TXButton.Size = new System.Drawing.Size(37, 34);
+            this.TXButton.TabIndex = 51;
+            this.TXButton.Text = "TX";
+            this.TXButton.UseVisualStyleBackColor = true;
+            this.TXButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TXPress);
+            this.TXButton.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TXRelease);
+            this.TXButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TXPress);
+            this.TXButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TXRelease);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(176, 380);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(34, 34);
+            this.button1.TabIndex = 52;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.OpenExplorerForConfigFile);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(620, 418);
-            this.Controls.Add(this.TrashButton);
-            this.Controls.Add(this.RefreshButton);
+            this.ClientSize = new System.Drawing.Size(619, 330);
+            this.Controls.Add(this.TXButton);
+            this.Controls.Add(this.Program3Led);
+            this.Controls.Add(this.Program2Led);
+            this.Controls.Add(this.Program1Led);
+            this.Controls.Add(this.RadioLed);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.com0comButton);
-            this.Controls.Add(this.DeviceButton);
-            this.Controls.Add(this.SoundButton);
-            this.Controls.Add(this.PttButtonCIV);
-            this.Controls.Add(this.PttButtonRTS);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "ICOM PROXY";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
-            this.tabPageComPort.ResumeLayout(false);
-            this.tabPageComPort.PerformLayout();
-            this.tabPageSettings.ResumeLayout(false);
-            this.tabPageSettings.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.tabPageRadio.ResumeLayout(false);
+            this.tabPageRadio.PerformLayout();
+            this.tabPageProgram.ResumeLayout(false);
+            this.tabPageProgram.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.tabPageTone.ResumeLayout(false);
+            this.tabPageTone.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.tabPageSettings.ResumeLayout(false);
+            this.tabPageSettings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox ComPortNumber1;
-        private System.Windows.Forms.ComboBox BaudComboBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button ComPortConnect1;
-        private System.Windows.Forms.Button ComPortDisconnect1;
-        private System.Windows.Forms.Button ComPortDisconnect2;
-        private System.Windows.Forms.Button ComPortConnect2;
-        private System.Windows.Forms.Label label_port_name2;
-        private System.Windows.Forms.ComboBox ComPortNumber2;
-        private System.Windows.Forms.Button ComPortDisconnect4;
-        private System.Windows.Forms.Button ComPortConnect4;
-        private System.Windows.Forms.Label label_port_name4;
-        private System.Windows.Forms.ComboBox ComPortNumber4;
-        private System.Windows.Forms.Button ComPortDisconnect3;
-        private System.Windows.Forms.Button ComPortConnect3;
-        private System.Windows.Forms.Label label_port_name3;
-        private System.Windows.Forms.ComboBox ComPortNumber3;
-        private System.Windows.Forms.Button PttButtonRTS;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button PttButtonCIV;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox_hex;
-        private System.Windows.Forms.CheckBox checkBox_FeedBack2;
-        private System.Windows.Forms.CheckBox checkBox_FeedBack3;
-        private System.Windows.Forms.CheckBox checkBox_FeedBack4;
+        private System.Windows.Forms.TextBox DebugLogTextBox;
+        private System.Windows.Forms.CheckBox Program1FeedBackCheckBox;
+        private System.Windows.Forms.CheckBox Program2FeedBackCheckBox;
+        private System.Windows.Forms.CheckBox Program3FeedBackCheckBox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox checkBox_PTT_CIV;
-        private System.Windows.Forms.CheckBox checkBox_PTT_RTS;
         private System.Windows.Forms.Button SoundButton;
         private System.Windows.Forms.Button DeviceButton;
         private System.Windows.Forms.Button com0comButton;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPageComPort;
-        private System.Windows.Forms.TabPage tabPageSettings;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TabPage tabPageProgram;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBoxForceCIV;
-        private System.Windows.Forms.TextBox textBox_port_name2;
-        private System.Windows.Forms.TextBox textBox_port_name4;
-        private System.Windows.Forms.TextBox textBox_port_name3;
+        private System.Windows.Forms.TextBox Program1NameTextBox;
+        private System.Windows.Forms.TextBox Program3NameTextBox;
+        private System.Windows.Forms.TextBox Program2NameTextBox;
         private System.Windows.Forms.CheckBox checkBoxSaveAppData;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox_Ptt_timeout;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPageTone;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label6;
@@ -1375,8 +1478,8 @@
         private System.Windows.Forms.CheckBox checkBox_DL_0300;
         private System.Windows.Forms.CheckBox checkBox_DL_0900;
         private System.Windows.Forms.CheckBox checkBox_DL_0400;
-        private System.Windows.Forms.Button buttonStopDummyLoad;
-        private System.Windows.Forms.Button buttonStartDummyLoad;
+        private System.Windows.Forms.Button StopDummyLoadButton;
+        private System.Windows.Forms.Button StartDummyLoadButton;
         private System.Windows.Forms.CheckBox checkBox_DL_1000;
         private System.Windows.Forms.CheckBox checkBox_DL_2000;
         private System.Windows.Forms.CheckBox checkBox_DL_2600;
@@ -1406,11 +1509,51 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox textBoxDLTimeOut;
-        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox ToneLengthBox;
+        private System.Windows.Forms.Label toneInfoBox;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button RefreshButton;
+        private System.Windows.Forms.Button RefreshUsbButton;
         private System.Windows.Forms.Button TrashButton;
+        private System.Windows.Forms.TabPage tabPageRadio;
+        private System.Windows.Forms.ComboBox RadioComPortList;
+        private System.Windows.Forms.ComboBox RadioBaudList;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button RadioConnectButton;
+        private System.Windows.Forms.Button RadioDisconnectButton;
+        private System.Windows.Forms.TextBox RadioHexTextBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button Program1DisconnectButton;
+        private System.Windows.Forms.ComboBox Program1Com0comList;
+        private System.Windows.Forms.Button Program1ConnectButton;
+        private System.Windows.Forms.ComboBox Program2Com0comList;
+        private System.Windows.Forms.Button Program2ConnectButton;
+        private System.Windows.Forms.Button Program2DisconnectButton;
+        private System.Windows.Forms.ComboBox Program3Com0comList;
+        private System.Windows.Forms.Button Program3ConnectButton;
+        private System.Windows.Forms.Button Program3DisconnectButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox RadioTxTimeoutTextBox;
+        private System.Windows.Forms.CheckBox checkBoxForceCIV;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox Program1infoBox;
+        private System.Windows.Forms.Button RadioLed;
+        private System.Windows.Forms.Button Program1Led;
+        private System.Windows.Forms.Button Program2Led;
+        private System.Windows.Forms.Button Program3Led;
+        private System.Windows.Forms.Button TXButton;
+        private System.Windows.Forms.TextBox Program3infoBox;
+        private System.Windows.Forms.TextBox Program2infoBox;
+        private System.Windows.Forms.Button OpenExplorerForConfigFileButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage tabPageSettings;
+        private System.Windows.Forms.TextBox DebugLogLinesTextBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox LogDateCheckBox;
+        private System.Windows.Forms.CheckBox LogTimeCheckBox;
+        private System.Windows.Forms.Button ShowToneTestButton;
     }
 }
 

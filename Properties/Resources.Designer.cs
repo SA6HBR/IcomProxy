@@ -63,9 +63,29 @@ namespace Icom_Proxy.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap open_folder_24 {
+            get {
+                object obj = ResourceManager.GetObject("open-folder_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sa6hbr_logo {
             get {
                 object obj = ResourceManager.GetObject("sa6hbr_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToneTest {
+            get {
+                object obj = ResourceManager.GetObject("ToneTest", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

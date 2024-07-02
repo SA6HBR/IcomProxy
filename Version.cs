@@ -7,25 +7,26 @@ namespace Icom_Proxy
 {
     public class Version
     {
-        public static string NameAndNumber = "Icom-Proxy 2.04 - SA6HBR";
+        public static string NameAndNumber = "Icom-Proxy 2.0.6 - SA6HBR";
     }
 
     /*
-    0.01 - First version
-    0.02 - Bugs
-    0.03 - Bugs
-    1.00 - Buttons com0comButton, SoundButton, DeviceButton
-    1.01 - try on get and save settings
-    1.02 - Fix
-    1.03 - Fix
-    1.04 - PttOf as initiate, Communications log
-    1.05 - Read tranciver ID code - Tips TT
-    1.06 - Find My Radio
-    2.00 - ToneGenerator
-    2.01 - NAudio not working well - Back to System.Media.SoundPlayer
-    2.02 - 20210404 - Timestamp in log. SaveSettings on al chenges. Cleaner code.
-    2.03 - GitHub
-    2.04 - Some bugs
-     
+    0.0.1 - First version
+    0.0.2 - Bugs
+    0.0.3 - Bugs
+    1.0.0 - Buttons com0comButton, SoundButton, DeviceButton
+    1.0.1 - try on get and save settings
+    1.0.2 - Fix
+    1.0.3 - Fix
+    1.0.4 - PttOf as initiate, Communications log
+    1.0.5 - Read tranciver ID code - Tips TT
+    1.0.6 - Find My Radio
+    2.0.0 - ToneGenerator
+    2.0.1 - NAudio not working well - Back to System.Media.SoundPlayer
+    2.0.2 - 20210404 - Timestamp in log. SaveSettings on al chenges. Cleaner code.
+    2.0.3 - GitHub
+    2.0.4 - Some bugs
+    2.0.5 - Better way to handle choice of comport.
+    2.0.6 - Some bugs
      */
 }

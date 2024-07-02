@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
-using System.Data;
+using System.Configuration;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Configuration;
-using System.Threading;
-using System.Diagnostics;
-using System.Collections;
-using System.IO;
-using System.Xml;
-using System.Media;
 using System.Management;
+using System.Media;
+using System.Windows.Forms;
 
 namespace Icom_Proxy
 {
@@ -25,51 +19,48 @@ namespace Icom_Proxy
         public Form1()
         {
             InitializeComponent();
-        
-        }
+         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            
             
             ToolTip ToolTip1 = new ToolTip();
             ToolTip1.SetToolTip(this.com0comButton, "com0com");
             ToolTip1.SetToolTip(this.SoundButton, "Sound control");
             ToolTip1.SetToolTip(this.DeviceButton, "Device manager");
+            ToolTip1.SetToolTip(this.RefreshUsbButton, "Refresh Usblist");
 
-            comportUpdate("Start");
+            ComPortUpdate("Start");
 
-            SerialPort2.PinChanged += new SerialPinChangedEventHandler(SerialPort2_PinChanged);
-            SerialPort3.PinChanged += new SerialPinChangedEventHandler(SerialPort3_PinChanged);
-            SerialPort4.PinChanged += new SerialPinChangedEventHandler(SerialPort4_PinChanged);
+            Program1SerialPort.PinChanged += new SerialPinChangedEventHandler(Program1SerialPort_PinChanged);
+            Program2SerialPort.PinChanged += new SerialPinChangedEventHandler(Program2SerialPort_PinChanged);
+            Program3SerialPort.PinChanged += new SerialPinChangedEventHandler(Program3SerialPort_PinChanged);
 
-            SerialPort1.ReadTimeout = SerialPort1.WriteTimeout = 1000;
-            SerialPort2.ReadTimeout = SerialPort2.WriteTimeout = 1000;
-            SerialPort3.ReadTimeout = SerialPort3.WriteTimeout = 1000;
-            SerialPort4.ReadTimeout = SerialPort4.WriteTimeout = 1000;
+            RadioSerialPort.ReadTimeout = RadioSerialPort.WriteTimeout = 1000;
+            Program1SerialPort.ReadTimeout = Program1SerialPort.WriteTimeout = 1000;
+            Program2SerialPort.ReadTimeout = Program2SerialPort.WriteTimeout = 1000;
+            Program3SerialPort.ReadTimeout = Program3SerialPort.WriteTimeout = 1000;
 
-            BackgroundWorker1.WorkerSupportsCancellation = true;
-            BackgroundWorker1.WorkerReportsProgress = true;
-            BackgroundWorker1.DoWork += BackgroundWorker1_DoWork;
-            BackgroundWorker1.ProgressChanged += BackgroundWorker1_ProgressChanged;
+            RadioBackgroundWorker.WorkerSupportsCancellation = true;
+            RadioBackgroundWorker.WorkerReportsProgress = true;
+            RadioBackgroundWorker.DoWork += RadioBackgroundWorker_DoWork;
+            RadioBackgroundWorker.ProgressChanged += RadioBackgroundWorker_ProgressChanged;
             
-            BackgroundWorker2.WorkerSupportsCancellation = true;
-            BackgroundWorker2.WorkerReportsProgress = true;
-            BackgroundWorker2.DoWork += BackgroundWorker2_DoWork;
-            BackgroundWorker2.ProgressChanged += BackgroundWorker2_ProgressChanged;
+            Program1BackgroundWorker.WorkerSupportsCancellation = true;
+            Program1BackgroundWorker.WorkerReportsProgress = true;
+            Program1BackgroundWorker.DoWork += Program1BackgroundWorker_DoWork;
+            Program1BackgroundWorker.ProgressChanged += Program1BackgroundWorker_ProgressChanged;
 
-            BackgroundWorker3.WorkerSupportsCancellation = true;
-            BackgroundWorker3.WorkerReportsProgress = true;
-            BackgroundWorker3.DoWork += BackgroundWorker3_DoWork;
-            BackgroundWorker3.ProgressChanged += BackgroundWorker3_ProgressChanged;
+            Program2BackgroundWorker.WorkerSupportsCancellation = true;
+            Program2BackgroundWorker.WorkerReportsProgress = true;
+            Program2BackgroundWorker.DoWork += Program2BackgroundWorker_DoWork;
+            Program2BackgroundWorker.ProgressChanged += Program2BackgroundWorker_ProgressChanged;
 
-            BackgroundWorker4.WorkerSupportsCancellation = true;
-            BackgroundWorker4.WorkerReportsProgress = true;
-            BackgroundWorker4.DoWork += BackgroundWorker4_DoWork;
-            BackgroundWorker4.ProgressChanged += BackgroundWorker4_ProgressChanged;
+            Program3BackgroundWorker.WorkerSupportsCancellation = true;
+            Program3BackgroundWorker.WorkerReportsProgress = true;
+            Program3BackgroundWorker.DoWork += Program3BackgroundWorker_DoWork;
+            Program3BackgroundWorker.ProgressChanged += Program3BackgroundWorker_ProgressChanged;
 
-            TimerPTT_CIV.Tick += TimerPTT_CIV_of;
-
-            TimerPTT_RTS.Tick += TimerPTT_RTS_of;
+            TimerTX.Tick += TimerTX_of;
 
             TimerFindMyRadio.Tick += TimerFindMyRadioLoop;
             TimerFindMyRadio.Interval = 200;
@@ -77,51 +68,55 @@ namespace Icom_Proxy
             TimerDummyLoad.Tick += TimerDummyLoadLoop;
             TimerDummyLoad.Interval = 10000;
 
+            TimerCheckProgram.Tick += TimerCheckProgramLoop;
+            TimerCheckProgram.Interval = 5000;
+            TimerCheckProgram.Enabled = true;
+
             this.Text = Version.NameAndNumber;
 
             SerialPort_value.saveSettings = 0;
             GetSettings();
             SerialPort_value.saveSettings = 1;
-
+            ProgramInfoBoxes_Update("", null);
+            ToneInfoUpdate();
+            tabControl1.TabPages.Remove(tabPageTone);
         }
 
-        public static SerialPort SerialPort1 = new SerialPort();
-        public static SerialPort SerialPort2 = new SerialPort();
-        public static SerialPort SerialPort3 = new SerialPort();
-        public static SerialPort SerialPort4 = new SerialPort();
+        public static SerialPort RadioSerialPort = new SerialPort();
+        public static SerialPort Program1SerialPort = new SerialPort();
+        public static SerialPort Program2SerialPort = new SerialPort();
+        public static SerialPort Program3SerialPort = new SerialPort();
 
-        public static System.Windows.Forms.Timer Timer1 = new System.Windows.Forms.Timer();
-        public static System.Windows.Forms.Timer TimerPTT_CIV = new System.Windows.Forms.Timer();
-        public static System.Windows.Forms.Timer TimerPTT_RTS = new System.Windows.Forms.Timer();
+        public static System.Windows.Forms.Timer TimerTX = new System.Windows.Forms.Timer();
         public static System.Windows.Forms.Timer TimerFindMyRadio = new System.Windows.Forms.Timer();
         public static System.Windows.Forms.Timer TimerDummyLoad = new System.Windows.Forms.Timer();
+        public static System.Windows.Forms.Timer TimerCheckProgram = new System.Windows.Forms.Timer();
 
-        public static BackgroundWorker BackgroundWorker1 = new BackgroundWorker();
-        public static BackgroundWorker BackgroundWorker2 = new BackgroundWorker();
-        public static BackgroundWorker BackgroundWorker3 = new BackgroundWorker();
-        public static BackgroundWorker BackgroundWorker4 = new BackgroundWorker();
+        public static BackgroundWorker RadioBackgroundWorker = new BackgroundWorker();
+        public static BackgroundWorker Program1BackgroundWorker = new BackgroundWorker();
+        public static BackgroundWorker Program2BackgroundWorker = new BackgroundWorker();
+        public static BackgroundWorker Program3BackgroundWorker = new BackgroundWorker();
 
         private System.Media.SoundPlayer sPlayer;
  
-
         static class SerialPort_value
         {
-            public static string port_name1 = "Radio";
-            public static string port_name2 = "Program 1";
-            public static string port_name3 = "Program 2";
-            public static string port_name4 = "Program 3";
+            public static string portRadioName = "Radio";
+            public static string portProgram1Name = "Program 1";
+            public static string portProgram2Name = "Program 2";
+            public static string portProgram3Name = "Program 3";
 
             public static int saveSettings = 0;
             
-            public static int status_receiving1;
-            public static int status_receiving2;
-            public static int status_receiving3;
-            public static int status_receiving4;
+            public static int statusRadioReceiving;
+            public static int statusProgram1Receiving;
+            public static int statusProgram2Receiving;
+            public static int statusProgram3Receiving;
 
-            public static byte[] data_receiving1 = new byte[0];
-            public static byte[] data_receiving2 = new byte[0];
-            public static byte[] data_receiving3 = new byte[0];
-            public static byte[] data_receiving4 = new byte[0];
+            public static byte[] dataRadioReceiving = new byte[0];
+            public static byte[] dataProgram1Receiving = new byte[0];
+            public static byte[] dataProgram2Receiving = new byte[0];
+            public static byte[] dataProgram3Receiving = new byte[0];
 
         }
         public class SerialPort_Data
@@ -134,40 +129,80 @@ namespace Icom_Proxy
 
         private void DebugLogTextInsert(string program, string text)
         {
-            textBox1.Text = textBox1.Text.Insert(0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " - " + program.PadRight(10) + ": " + text + "\r\n");
-            DebugLogRemoveLines(50);
+            string timestamp = "";
+            string timestampFormat = "yyyy-MM-dd HH:mm:ss";
+
+            if(LogDateCheckBox.Checked && !LogTimeCheckBox.Checked) { timestampFormat = "yyyy-MM-dd"; }
+            else if (!LogDateCheckBox.Checked && LogTimeCheckBox.Checked) { timestampFormat = "HH:mm:ss"; }
+
+            if (LogDateCheckBox.Checked || LogTimeCheckBox.Checked) { timestamp = DateTime.Now.ToString(timestampFormat) + " - "; }
+            
+            DebugLogTextBox.Text = DebugLogTextBox.Text.Insert(0, timestamp + program.PadRight(10) + ": " + text + "\r\n");
+            DebugLogRemoveLines(int.Parse(DebugLogLinesTextBox.Text));
         }
         private void DebugLogRemoveLines(int rows)
         {
   
-            if (textBox1.Lines.Length > rows)
+            if (DebugLogTextBox.Lines.Length > rows)
             {
-                textBox1.Lines = textBox1.Lines.Take(rows).ToArray();
+                DebugLogTextBox.Lines = DebugLogTextBox.Lines.Take(rows).ToArray();
             }
         }
-        private void comportUpdate(string program)
+        private void ComPortUpdate(string program)
         {
-            ComPortNumber1.Items.Clear();
-            ComPortNumber2.Items.Clear();
-            ComPortNumber3.Items.Clear();
-            ComPortNumber4.Items.Clear();
+            int com0comCount = 0;
+            int comCount = 0;
+            
+            RadioComPortList.Items.Clear();
+            Program1Com0comList.Items.Clear();
+            Program2Com0comList.Items.Clear();
+            Program3Com0comList.Items.Clear();
 
-            ComPortNumber1.Sorted = true;
-            ComPortNumber2.Sorted = true;
-            ComPortNumber3.Sorted = true;
-            ComPortNumber4.Sorted = true;
+            RadioComPortList.Sorted = true;
+            Program1Com0comList.Sorted = true;
+            Program2Com0comList.Sorted = true;
+            Program3Com0comList.Sorted = true;
 
-            ComPortNumber1.Items.AddRange(SerialPort.GetPortNames());
-            ComPortNumber2.Items.AddRange(SerialPort.GetPortNames());
-            ComPortNumber3.Items.AddRange(SerialPort.GetPortNames());
-            ComPortNumber4.Items.AddRange(SerialPort.GetPortNames());
-
+//            RadioComPortList.Items.AddRange(SerialPort.GetPortNames());
 
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\cimv2",
                 "SELECT * FROM Win32_PnPEntity where Caption is not null");
 
             foreach (ManagementObject CNCA in searcher.Get())
             {
+                if (CNCA["Caption"].ToString().IndexOf("(COM") > 0 && CNCA["Caption"].ToString().ToLower().IndexOf("com0com") == -1)
+                {
+
+                    int startA = CNCA["Caption"].ToString().IndexOf("(COM") + 1;
+                    int endA = CNCA["Caption"].ToString().IndexOf(")", startA);
+                    string comA = CNCA["Caption"].ToString().Substring(startA, endA - startA).PadRight(5);
+                    RadioComPortList.Items.Add(comA);
+
+                    DebugLogTextInsert(CNCA["Manufacturer"].ToString(), comA);
+
+                    comCount += 1;
+                }
+
+                if (CNCA["Caption"].ToString().IndexOf("(COM") == -1 && CNCA["DeviceID"].ToString().Length > 23)
+                {
+                    if (CNCA["DeviceID"].ToString().Substring(0,23) == @"USB\VID_0557&PID_2008\5")
+                    {
+                        DebugLogTextInsert("Driver missing", "ATEN USB to Serial Bridge");
+                    }
+                    else if (CNCA["DeviceID"].ToString() == @"FTDIBUS\VID_0403+PID_6001+A50285BIA\0000")
+                    {
+                        DebugLogTextInsert("Driver missing", "FTDI USB Serial Port");
+                    }
+                    else if (CNCA["DeviceID"].ToString() == @"USB\VID_10C4&PID_EA60\0001")
+                    {
+                        DebugLogTextInsert("Driver missing", "Silicon Labs CP210x");
+                    }
+                    else if (CNCA["DeviceID"].ToString() == @"USB\VID_067B&PID_2303\5&399BC254&0&5")
+                    {
+                        DebugLogTextInsert("Driver missing", "Prolific - Don't use this");
+                    }
+                }
+
                 if (CNCA["DeviceID"].ToString().IndexOf("CNCA") > 0)
                 {
                     foreach (ManagementObject CNCB in searcher.Get())
@@ -180,67 +215,43 @@ namespace Icom_Proxy
                                 int startB = CNCB["Caption"].ToString().IndexOf("(COM") + 1;
                                 int endA = CNCA["Caption"].ToString().IndexOf(")", startA);
                                 int endB = CNCB["Caption"].ToString().IndexOf(")", startB);
-                                DebugLogTextInsert("com0com", CNCA["Caption"].ToString().Substring(startA, endA - startA) + " - " + CNCB["Caption"].ToString().Substring(startB, endB - startB));
+                                string comA = CNCA["Caption"].ToString().Substring(startA, endA - startA).PadRight(5);
+                                string comB = CNCB["Caption"].ToString().Substring(startB, endB - startB).PadRight(5);
+                                string com0comPair = comA + " - " + comB;
+                                DebugLogTextInsert("com0com", com0comPair);
+
+                                Program1Com0comList.Items.Add(com0comPair);
+                                Program2Com0comList.Items.Add(com0comPair);
+                                Program3Com0comList.Items.Add(com0comPair);
+
+                                com0comCount += 1;
                             }
                         }
                         catch (Exception)
                         {
-
                             throw;
                         }
-
-
                     }
                 }
-
             }
 
-            foreach (ManagementObject queryObj in searcher.Get())
+            if (com0comCount == 0)
             {
-                if ((queryObj["Caption"].ToString().IndexOf("(COM") > 0) && (queryObj["Caption"].ToString().IndexOf("com0com") < 0))
-                {
-                    DebugLogTextInsert("Serial interface", queryObj["Caption"].ToString());
-                }
+                DebugLogTextInsert("Error", "No com0com for program");
             }
 
+            if (comCount == 0)
+            {
+                DebugLogTextInsert("Error", "No com-port for radio");
+            }
 
             DebugLogTextInsert(program, "Check Comport");
-        }
-        public void DebugMessage(object sender, EventArgs e)
-        {
-            string header = "sender: " + sender.ToString();
-            string body;
 
-            if (e is null)
-            {
-                body = "EventArgs: null";
-            }
-            else
-            {
-                body = "EventArgs: " + e.ToString();
-            }
-
-            DebugLogTextInsert(header, body);
-            Debug.WriteLine(header + " - " + body);
-            MessageBox.Show(header, body);
         }
-
-        public void SaveSettings(object sender, EventArgs e)
+        private void TimerTX_of(object sender, EventArgs e)
         {
-            SaveSettings();
-        }
-
-        private void TimerPTT_CIV_of(object sender, EventArgs e)
-        {
-            // Send a PTT of via CIV
-            this.FunctionPttCIV(false, "Timer");
-            TimerPTT_CIV.Enabled = false;
-        }
-        private void TimerPTT_RTS_of(object sender, EventArgs e)
-        {
-            // Send a PTT of via RTS
-            this.FunctionPttRts(false, "Timer");
-            TimerPTT_RTS.Enabled = false;
+            this.FunctionTX(false, "Timer");
+            TimerTX.Enabled = false;
         }
         private void TimerFindMyRadioLoop(object sender, EventArgs e)
         {
@@ -251,14 +262,14 @@ namespace Icom_Proxy
             Initiate[2] = Radio.CIV.Adress;
 
 
-            if (textBox_hex.TextLength == 0 && Radio.CIV.Adress != 0xff && SerialPort1.IsOpen)
+            if (RadioHexTextBox.TextLength == 0 && Radio.CIV.Adress != 0xff && RadioSerialPort.IsOpen)
             {
                 DebugLogTextInsert("FindMyRadio", BitConverter.ToString(Initiate, 0, Initiate.Length).Replace("-", " "));
-                SerialPort1.Write(Initiate, 0, Initiate.Length);
+                RadioSerialPortWrite(Initiate, 0, Initiate.Length);
             }
-            else if (textBox_hex.TextLength > 0)
+            else if (RadioHexTextBox.TextLength > 0)
             {
-                DebugLogTextInsert("CI-V Adress", textBox_hex.Text);
+                DebugLogTextInsert("CI-V Adress", RadioHexTextBox.Text);
                 TimerFindMyRadio.Enabled = false;
             }
             else
@@ -272,101 +283,132 @@ namespace Icom_Proxy
         private void TimerDummyLoadLoop(object sender, EventArgs e)
         {
             TimerDummyLoad.Enabled = false;
-            this.stopDummyLoad();
+            this.StopDummyLoad();
+        }
+        private void TimerCheckProgramLoop(object sender, EventArgs e)
+        {
+            var procs = Process.GetProcesses();
+            string procsTitle = "Icom-Proxy";
+            int procsCount = 0;
+
+            foreach (var proc in procs)
+            {
+                if (proc.MainWindowTitle.Length >= procsTitle.Length && proc.MainWindowTitle.Substring(0, procsTitle.Length) == procsTitle)
+                {
+                    procsCount += 1;
+                }
+
+                //                DebugLogTextInsert("xxx", proc.MainWindowTitle);
+
+
+            }
+
+            if (procsCount > 1)
+            {
+                DebugLogTextInsert("Error", "More than one " + procsTitle);
+                TimerCheckProgram.Enabled = false;
+                MessageBox.Show(
+                                "Only one " + procsTitle,
+                                "ERROR",
+                                MessageBoxButtons.OK,
+                                //MessageBoxIcon.Warning // for Warning  
+                                MessageBoxIcon.Error // for Error 
+                                                     //MessageBoxIcon.Information  // for Information
+                                                     //MessageBoxIcon.Question // for Question
+                                );
+                Application.Exit();
+            }
         }
 
-
-        private static void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private static void RadioBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var buffer = new byte[4096];
 
-            while (!BackgroundWorker1.CancellationPending)
+            while (!RadioBackgroundWorker.CancellationPending)
             {
                 try
                 {
-                    if (SerialPort1.IsOpen)
+                    if (RadioSerialPort.IsOpen)
                     {
-                      var c = SerialPort1.Read(buffer, 0, buffer.Length);
-                      BackgroundWorker1.ReportProgress(0, new SerialPort_Data() { Data_sp1 = buffer.Take(c).ToArray() });
+                      var c = RadioSerialPort.Read(buffer, 0, buffer.Length);
+                      RadioBackgroundWorker.ReportProgress(0, new SerialPort_Data() { Data_sp1 = buffer.Take(c).ToArray() });
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("BackgroundWorker1_DoWork: " + ex.Message);
+                    Debug.WriteLine("RadioBackgroundWorker_DoWork: " + ex.Message);
                 }
             }
 
         }
-        private static void BackgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        private static void Program1BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var buffer = new byte[4096];
 
-            while (!BackgroundWorker2.CancellationPending)
+            while (!Program1BackgroundWorker.CancellationPending)
             {
                 try
                 {
-                    if (SerialPort2.IsOpen)
+                    if (Program1SerialPort.IsOpen)
                     {
-                       var c = SerialPort2.Read(buffer, 0, buffer.Length);
-                       BackgroundWorker2.ReportProgress(0, new SerialPort_Data() { Data_sp2 = buffer.Take(c).ToArray() });
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("BackgroundWorker2_DoWork: " + ex.Message);
-                }
-            }
-
-        }
-        private static void BackgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var buffer = new byte[4096];
-
-            while (!BackgroundWorker3.CancellationPending)
-            {
-                try
-                {
-                    if (SerialPort3.IsOpen)
-                    {
-                        var c = SerialPort3.Read(buffer, 0, buffer.Length);
-                        BackgroundWorker3.ReportProgress(0, new SerialPort_Data() { Data_sp3 = buffer.Take(c).ToArray() });
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("BackgroundWorker3_DoWork: " + ex.Message);
-                }
-            }
-
-        }
-        private static void BackgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var buffer = new byte[4096];
-
-            while (!BackgroundWorker4.CancellationPending)
-            {
-                try
-                {
-                    if (SerialPort4.IsOpen)
-                    {
-                        var c = SerialPort4.Read(buffer, 0, buffer.Length);
-                        BackgroundWorker4.ReportProgress(0, new SerialPort_Data() { Data_sp4 = buffer.Take(c).ToArray() });
+                       var c = Program1SerialPort.Read(buffer, 0, buffer.Length);
+                       Program1BackgroundWorker.ReportProgress(0, new SerialPort_Data() { Data_sp2 = buffer.Take(c).ToArray() });
 
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("BackgroundWorker4_DoWork: " + ex.Message);
+                    Debug.WriteLine("Program1BackgroundWorker_DoWork: " + ex.Message);
+                }
+            }
+
+        }
+        private static void Program2BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var buffer = new byte[4096];
+
+            while (!Program2BackgroundWorker.CancellationPending)
+            {
+                try
+                {
+                    if (Program2SerialPort.IsOpen)
+                    {
+                        var c = Program2SerialPort.Read(buffer, 0, buffer.Length);
+                        Program2BackgroundWorker.ReportProgress(0, new SerialPort_Data() { Data_sp3 = buffer.Take(c).ToArray() });
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Program2BackgroundWorker_DoWork: " + ex.Message);
+                }
+            }
+
+        }
+        private static void Program3BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var buffer = new byte[4096];
+
+            while (!Program3BackgroundWorker.CancellationPending)
+            {
+                try
+                {
+                    if (Program3SerialPort.IsOpen)
+                    {
+                        var c = Program3SerialPort.Read(buffer, 0, buffer.Length);
+                        Program3BackgroundWorker.ReportProgress(0, new SerialPort_Data() { Data_sp4 = buffer.Take(c).ToArray() });
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Program3BackgroundWorker_DoWork: " + ex.Message);
                 }
             }
 
         }
 
-
-
-        private void BackgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void RadioBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             var sp = e.UserState as SerialPort_Data;
 
@@ -374,43 +416,76 @@ namespace Icom_Proxy
             {
                 if (sp.Data_sp1[i].ToString("x2").Equals("fe"))
                 {
-                    SerialPort_value.status_receiving1 += 1;
+                    SerialPort_value.statusRadioReceiving += 1;
                 }
-                if (SerialPort_value.status_receiving1 > 0 && sp.Data_sp1.Length > i)
+                if (SerialPort_value.statusRadioReceiving > 0 && sp.Data_sp1.Length > i)
                 {
-                    Array.Resize(ref SerialPort_value.data_receiving1, SerialPort_value.data_receiving1.Length + 1);
-                    SerialPort_value.data_receiving1[SerialPort_value.data_receiving1.Length - 1] = sp.Data_sp1[i];
+                    Array.Resize(ref SerialPort_value.dataRadioReceiving, SerialPort_value.dataRadioReceiving.Length + 1);
+                    SerialPort_value.dataRadioReceiving[SerialPort_value.dataRadioReceiving.Length - 1] = sp.Data_sp1[i];
                 }
                 if (sp.Data_sp1[i].ToString("x2").Equals("fd"))
                 {
-                        if (SerialPort2.IsOpen && checkBox_FeedBack2.Checked) SerialPort2.Write(SerialPort_value.data_receiving1, 0, SerialPort_value.data_receiving1.Length);
-                        if (SerialPort3.IsOpen && checkBox_FeedBack3.Checked) SerialPort3.Write(SerialPort_value.data_receiving1, 0, SerialPort_value.data_receiving1.Length);
-                        if (SerialPort4.IsOpen && checkBox_FeedBack4.Checked) SerialPort4.Write(SerialPort_value.data_receiving1, 0, SerialPort_value.data_receiving1.Length);
+                    if (Program1SerialPort.IsOpen && Program1FeedBackCheckBox.Checked)
+                    {
+                        try
+                        {
+                            
+                           Program1SerialPort.Write(SerialPort_value.dataRadioReceiving, 0, SerialPort_value.dataRadioReceiving.Length);
+                        }
+                        catch (Exception)
+                        {
+                            DebugLogTextInsert(SerialPort_value.portProgram1Name, "Write-error");
+                        }
+                    }
+                    if (Program2SerialPort.IsOpen && Program2FeedBackCheckBox.Checked)
+                    {
+                        try
+                        {
+                            Program2SerialPort.Write(SerialPort_value.dataRadioReceiving, 0, SerialPort_value.dataRadioReceiving.Length);
+                        }
+                        catch (Exception)
+                        {
+                            DebugLogTextInsert(SerialPort_value.portProgram2Name, "Write-error");
+                        }
+                    }
+                    if (Program3SerialPort.IsOpen && Program3FeedBackCheckBox.Checked)
+                    {
+                        try
+                        {
+                            Program3SerialPort.Write(SerialPort_value.dataRadioReceiving, 0, SerialPort_value.dataRadioReceiving.Length);
+                        }
+                        catch (Exception)
+                        {
+                            DebugLogTextInsert(SerialPort_value.portProgram3Name, "Write-error");
+                        }
+                    }
+                    
                 
-                    if (textBox_hex.Text == "" 
-                            && SerialPort_value.data_receiving1[3].ToString("X2") != "00" 
-                            && SerialPort_value.data_receiving1[3].ToString("X2") != "E0")
+                    if (RadioHexTextBox.Text == "" 
+                            && SerialPort_value.dataRadioReceiving[3].ToString("X2") != "00" 
+                            && SerialPort_value.dataRadioReceiving[3].ToString("X2") != "E0")
                     {
-                        textBox_hex.Text = SerialPort_value.data_receiving1[3].ToString("X2");
+                        RadioHexTextBox.Text = SerialPort_value.dataRadioReceiving[3].ToString("X2");
                     }
 
-                    if (textBox_hex.Text != SerialPort_value.data_receiving1[3].ToString("X2")
-                            && textBox_hex.Text != SerialPort_value.data_receiving1[4].ToString("X2")
-                            && SerialPort_value.data_receiving1[3].ToString("X2") != "E0" 
-                            && textBox_hex.TextLength > 0)
+                    if (SerialPort_value.dataRadioReceiving.Length >= 4 &&
+                        RadioHexTextBox.Text != SerialPort_value.dataRadioReceiving[3].ToString("X2")
+                            && RadioHexTextBox.Text != SerialPort_value.dataRadioReceiving[4].ToString("X2")
+                            && SerialPort_value.dataRadioReceiving[3].ToString("X2") != "E0" 
+                            && RadioHexTextBox.TextLength > 0)
                     {
-                        DebugLogTextInsert(SerialPort_value.port_name1 + " : Error HEX? ", textBox_hex.Text + " <> " + SerialPort_value.data_receiving1[3].ToString("X2"));
+                        DebugLogTextInsert(SerialPort_value.portRadioName + " : Error HEX? ", RadioHexTextBox.Text + " <> " + SerialPort_value.dataRadioReceiving[3].ToString("X2"));
                     }
 
-                    SerialPort_value.status_receiving1 = 0;
-                    DebugLogTextInsert(SerialPort_value.port_name1, BitConverter.ToString(SerialPort_value.data_receiving1, 0, SerialPort_value.data_receiving1.Length).Replace("-", " "));
-                    Array.Clear(SerialPort_value.data_receiving1, 0, SerialPort_value.data_receiving1.Length);
-                    Array.Resize(ref SerialPort_value.data_receiving1, 0);
+                    SerialPort_value.statusRadioReceiving = 0;
+                    DebugLogTextInsert(SerialPort_value.portRadioName, BitConverter.ToString(SerialPort_value.dataRadioReceiving, 0, SerialPort_value.dataRadioReceiving.Length).Replace("-", " "));
+                    Array.Clear(SerialPort_value.dataRadioReceiving, 0, SerialPort_value.dataRadioReceiving.Length);
+                    Array.Resize(ref SerialPort_value.dataRadioReceiving, 0);
                 }
                 
             }
         }
-        private void BackgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Program1BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             var sp = e.UserState as SerialPort_Data;
 
@@ -418,37 +493,37 @@ namespace Icom_Proxy
             {
                 if (sp.Data_sp2[i].ToString("x2").Equals("fe"))
                 {
-                    SerialPort_value.status_receiving2 += 1;
+                    SerialPort_value.statusProgram1Receiving += 1;
                 }
-                if (SerialPort_value.status_receiving2 > 0 && sp.Data_sp2.Length > i)
+                if (SerialPort_value.statusProgram1Receiving > 0 && sp.Data_sp2.Length > i)
                 {
-                    Array.Resize(ref SerialPort_value.data_receiving2, SerialPort_value.data_receiving2.Length + 1);
-                    SerialPort_value.data_receiving2[SerialPort_value.data_receiving2.Length - 1] = sp.Data_sp2[i];
+                    Array.Resize(ref SerialPort_value.dataProgram1Receiving, SerialPort_value.dataProgram1Receiving.Length + 1);
+                    SerialPort_value.dataProgram1Receiving[SerialPort_value.dataProgram1Receiving.Length - 1] = sp.Data_sp2[i];
                 }
                 if (sp.Data_sp2[i].ToString("x2").Equals("fd"))
                 {
-                    if (textBox_hex.TextLength > 0 & checkBoxForceCIV.Checked)
+                    if (RadioHexTextBox.TextLength > 0 & checkBoxForceCIV.Checked)
                     {
-                        SerialPort_value.data_receiving2[2] = Convert.ToByte(textBox_hex.Text, 16);
+                        SerialPort_value.dataProgram1Receiving[2] = Convert.ToByte(RadioHexTextBox.Text, 16);
                     }
 
-                    if (SerialPort1.IsOpen) SerialPort1.Write(SerialPort_value.data_receiving2, 0, SerialPort_value.data_receiving2.Length);
+                    if (RadioSerialPort.IsOpen) RadioSerialPortWrite(SerialPort_value.dataProgram1Receiving, 0, SerialPort_value.dataProgram1Receiving.Length);
 
-                    PttCIV2RTS(SerialPort_value.data_receiving2, SerialPort_value.port_name2);
+                    FunctionSendCIV(SerialPort_value.dataProgram1Receiving, SerialPort_value.portProgram1Name);
 
-                    if (textBox_hex.Text != SerialPort_value.data_receiving2[2].ToString("X2") && textBox_hex.Text != "" && checkBoxForceCIV.Checked == false)
+                    if (RadioHexTextBox.Text != SerialPort_value.dataProgram1Receiving[2].ToString("X2") && RadioHexTextBox.Text != "" && checkBoxForceCIV.Checked == false)
                     {
-                        DebugLogTextInsert(SerialPort_value.port_name2 + " : Error HEX? ", textBox_hex.Text + " <> " + SerialPort_value.data_receiving2[2].ToString("X2"));
+                        DebugLogTextInsert(SerialPort_value.portProgram1Name + " : Error HEX? ", RadioHexTextBox.Text + " <> " + SerialPort_value.dataProgram1Receiving[2].ToString("X2"));
                     }
 
-                    SerialPort_value.status_receiving2 = 0;
-                    DebugLogTextInsert(SerialPort_value.port_name2, BitConverter.ToString(SerialPort_value.data_receiving2, 0, SerialPort_value.data_receiving2.Length).Replace("-", " "));
-                    Array.Clear(SerialPort_value.data_receiving2, 0, SerialPort_value.data_receiving2.Length);
-                    Array.Resize(ref SerialPort_value.data_receiving2, 0);
+                    SerialPort_value.statusProgram1Receiving = 0;
+                    DebugLogTextInsert(SerialPort_value.portProgram1Name, BitConverter.ToString(SerialPort_value.dataProgram1Receiving, 0, SerialPort_value.dataProgram1Receiving.Length).Replace("-", " "));
+                    Array.Clear(SerialPort_value.dataProgram1Receiving, 0, SerialPort_value.dataProgram1Receiving.Length);
+                    Array.Resize(ref SerialPort_value.dataProgram1Receiving, 0);
                 }
             }
         }
-        private void BackgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Program2BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             var sp = e.UserState as SerialPort_Data;
 
@@ -456,36 +531,36 @@ namespace Icom_Proxy
             {
                 if (sp.Data_sp3[i].ToString("x2").Equals("fe"))
                 {
-                    SerialPort_value.status_receiving3 += 1;
+                    SerialPort_value.statusProgram2Receiving += 1;
                 }
-                if (SerialPort_value.status_receiving3 > 0 && sp.Data_sp3.Length > i)
+                if (SerialPort_value.statusProgram2Receiving > 0 && sp.Data_sp3.Length > i)
                 {
-                    Array.Resize(ref SerialPort_value.data_receiving3, SerialPort_value.data_receiving3.Length + 1);
-                    SerialPort_value.data_receiving3[SerialPort_value.data_receiving3.Length - 1] = sp.Data_sp3[i];
+                    Array.Resize(ref SerialPort_value.dataProgram2Receiving, SerialPort_value.dataProgram2Receiving.Length + 1);
+                    SerialPort_value.dataProgram2Receiving[SerialPort_value.dataProgram2Receiving.Length - 1] = sp.Data_sp3[i];
                 }
                 if (sp.Data_sp3[i].ToString("x2").Equals("fd"))
                 {
-                    if (textBox_hex.TextLength > 0 && checkBoxForceCIV.Checked)
+                    if (RadioHexTextBox.TextLength > 0 && checkBoxForceCIV.Checked)
                     {
-                        SerialPort_value.data_receiving3[2] = Convert.ToByte(textBox_hex.Text, 16);
+                        SerialPort_value.dataProgram2Receiving[2] = Convert.ToByte(RadioHexTextBox.Text, 16);
                     }
                     
-                    if (SerialPort1.IsOpen) SerialPort1.Write(SerialPort_value.data_receiving3, 0, SerialPort_value.data_receiving3.Length);
+                    if (RadioSerialPort.IsOpen) RadioSerialPortWrite(SerialPort_value.dataProgram2Receiving, 0, SerialPort_value.dataProgram2Receiving.Length);
 
-                    PttCIV2RTS(SerialPort_value.data_receiving3, SerialPort_value.port_name3);
+                    FunctionSendCIV(SerialPort_value.dataProgram2Receiving, SerialPort_value.portProgram2Name);
 
-                    if (textBox_hex.Text != SerialPort_value.data_receiving3[2].ToString("X2") && textBox_hex.Text != "" && checkBoxForceCIV.Checked == false)
+                    if (RadioHexTextBox.Text != SerialPort_value.dataProgram2Receiving[2].ToString("X2") && RadioHexTextBox.Text != "" && checkBoxForceCIV.Checked == false)
                     {
-                        DebugLogTextInsert(SerialPort_value.port_name3 + " : Error HEX? ", textBox_hex.Text + " <> " + SerialPort_value.data_receiving3[2].ToString("X2"));
+                        DebugLogTextInsert(SerialPort_value.portProgram2Name + " : Error HEX? ", RadioHexTextBox.Text + " <> " + SerialPort_value.dataProgram2Receiving[2].ToString("X2"));
                     }
-                    SerialPort_value.status_receiving3 = 0;
-                    DebugLogTextInsert(SerialPort_value.port_name3, BitConverter.ToString(SerialPort_value.data_receiving3, 0, SerialPort_value.data_receiving3.Length).Replace("-", " "));
-                    Array.Clear(SerialPort_value.data_receiving3, 0, SerialPort_value.data_receiving3.Length);
-                    Array.Resize(ref SerialPort_value.data_receiving3, 0);
+                    SerialPort_value.statusProgram2Receiving = 0;
+                    DebugLogTextInsert(SerialPort_value.portProgram2Name, BitConverter.ToString(SerialPort_value.dataProgram2Receiving, 0, SerialPort_value.dataProgram2Receiving.Length).Replace("-", " "));
+                    Array.Clear(SerialPort_value.dataProgram2Receiving, 0, SerialPort_value.dataProgram2Receiving.Length);
+                    Array.Resize(ref SerialPort_value.dataProgram2Receiving, 0);
                 }
             }
         }
-        private void BackgroundWorker4_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Program3BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             var sp = e.UserState as SerialPort_Data;
 
@@ -493,343 +568,338 @@ namespace Icom_Proxy
             {
                 if (sp.Data_sp4[i].ToString("x2").Equals("fe"))
                 {
-                    SerialPort_value.status_receiving4 += 1;
+                    SerialPort_value.statusProgram3Receiving += 1;
                 }
-                if (SerialPort_value.status_receiving4 > 0 && sp.Data_sp4.Length > i)
+                if (SerialPort_value.statusProgram3Receiving > 0 && sp.Data_sp4.Length > i)
                 {
-                    Array.Resize(ref SerialPort_value.data_receiving4, SerialPort_value.data_receiving4.Length + 1);
-                    SerialPort_value.data_receiving4[SerialPort_value.data_receiving4.Length - 1] = sp.Data_sp4[i];
+                    Array.Resize(ref SerialPort_value.dataProgram3Receiving, SerialPort_value.dataProgram3Receiving.Length + 1);
+                    SerialPort_value.dataProgram3Receiving[SerialPort_value.dataProgram3Receiving.Length - 1] = sp.Data_sp4[i];
                 }
                 if (sp.Data_sp4[i].ToString("x2").Equals("fd"))
                 {
-                    if (textBox_hex.TextLength > 0 && checkBoxForceCIV.Checked)
+                    if (RadioHexTextBox.TextLength > 0 && checkBoxForceCIV.Checked)
                     {
-                        SerialPort_value.data_receiving4[2] = Convert.ToByte(textBox_hex.Text, 16);
+                        SerialPort_value.dataProgram3Receiving[2] = Convert.ToByte(RadioHexTextBox.Text, 16);
                     }
                     
-                    if (SerialPort1.IsOpen) SerialPort1.Write(SerialPort_value.data_receiving4, 0, SerialPort_value.data_receiving4.Length);
+                    if (RadioSerialPort.IsOpen) RadioSerialPortWrite(SerialPort_value.dataProgram3Receiving, 0, SerialPort_value.dataProgram3Receiving.Length);
 
-                    PttCIV2RTS(SerialPort_value.data_receiving4, SerialPort_value.port_name4);
+                    FunctionSendCIV(SerialPort_value.dataProgram3Receiving, SerialPort_value.portProgram3Name);
 
-                    if (textBox_hex.Text != SerialPort_value.data_receiving4[2].ToString("X2") && textBox_hex.Text != "" && checkBoxForceCIV.Checked == false)
+                    if (RadioHexTextBox.Text != SerialPort_value.dataProgram3Receiving[2].ToString("X2") && RadioHexTextBox.Text != "" && checkBoxForceCIV.Checked == false)
                     {
-                        DebugLogTextInsert(SerialPort_value.port_name4 + " : Error HEX? ", textBox_hex.Text + " <> " + SerialPort_value.data_receiving4[2].ToString("X2"));
+                        DebugLogTextInsert(SerialPort_value.portProgram3Name + " : Error HEX? ", RadioHexTextBox.Text + " <> " + SerialPort_value.dataProgram3Receiving[2].ToString("X2"));
                     }
 
-                    SerialPort_value.status_receiving4 = 0;
-                    DebugLogTextInsert(SerialPort_value.port_name4, BitConverter.ToString(SerialPort_value.data_receiving4, 0, SerialPort_value.data_receiving4.Length).Replace("-", " "));
-                    Array.Clear(SerialPort_value.data_receiving4, 0, SerialPort_value.data_receiving4.Length);
-                    Array.Resize(ref SerialPort_value.data_receiving4, 0);
+                    SerialPort_value.statusProgram3Receiving = 0;
+                    DebugLogTextInsert(SerialPort_value.portProgram3Name, BitConverter.ToString(SerialPort_value.dataProgram3Receiving, 0, SerialPort_value.dataProgram3Receiving.Length).Replace("-", " "));
+                    Array.Clear(SerialPort_value.dataProgram3Receiving, 0, SerialPort_value.dataProgram3Receiving.Length);
+                    Array.Resize(ref SerialPort_value.dataProgram3Receiving, 0);
                 }
             }
         }
 
-        private void ComPortConnect1_Click(object sender, EventArgs e)
+        private void RadioConnect(object sender, EventArgs e)
         {
             try
             {
                 SaveSettings();
 
-                SerialPort1.BaudRate = int.Parse(BaudComboBox.Text);
-                SerialPort1.PortName = ComPortNumber1.Text;
-                SerialPort1.DtrEnable = true;
-                SerialPort1.Open();
-                SerialPort1.DiscardInBuffer();
-                SerialPort1.DiscardOutBuffer();
+                RadioSerialPort.BaudRate = int.Parse(RadioBaudList.Text);
+                RadioSerialPort.PortName = RadioComPortList.Text;
+                RadioSerialPort.DtrEnable = true;
+                RadioSerialPort.Open();
+                RadioSerialPort.DiscardInBuffer();
+                RadioSerialPort.DiscardOutBuffer();
 
-                BackgroundWorker1.RunWorkerAsync();
+                RadioBackgroundWorker.RunWorkerAsync();
 
-                if (textBox_hex.TextLength == 0) 
+                if (RadioHexTextBox.TextLength == 0) 
                 {
                     Radio.CIV.Adress = 00;
                     TimerFindMyRadio.Enabled = true; 
                 }
 
-                ComPortConnect1.Enabled = false;
-                ComPortDisconnect1.Enabled = true;
-                PttButtonRTS.Enabled = true;
-                PttButtonCIV.Enabled = true;
-
-                ComPortNumber1.Enabled = false;
-                BaudComboBox.Enabled = false;
-
-                buttonStartDummyLoad.Enabled = true;
-                buttonStopDummyLoad.Enabled = true;
-
+                RadioButton(true);
 
             }
             catch (Exception ex)
             {
-                if (SerialPort1.IsOpen) SerialPort1.Close();
+                if (RadioSerialPort.IsOpen) { RadioSerialPort.Close(); }
 
-                ComPortConnect1.Enabled = true;
-                ComPortDisconnect1.Enabled = false;
+                Debug.WriteLine("RadioConnect: " + ex.Message);
+                MessageBox.Show(ex.Message, "RadioComPortError " + SerialPort_value.portRadioName);
 
-                ComPortNumber1.Enabled = true;
-                BaudComboBox.Enabled = true;
-
-                buttonStartDummyLoad.Enabled = false;
-                buttonStopDummyLoad.Enabled = false;
-
-                Debug.WriteLine("ComPortConnect1_Click: " + ex.Message);
-                MessageBox.Show(ex.Message, "ComPortError " + SerialPort_value.port_name1);
+                RadioButton(false);
             }
         }
-        private void ComPortConnect2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SaveSettings();
-
-                SerialPort2.BaudRate = int.Parse(BaudComboBox.Text);
-                SerialPort2.PortName = ComPortNumber2.Text;
-                SerialPort2.DtrEnable = true;
-                SerialPort2.Open();
-                SerialPort2.DiscardInBuffer();
-                SerialPort2.DiscardOutBuffer();
-
-
-                BackgroundWorker2.RunWorkerAsync();
-
-                ComPortConnect2.Enabled = false;
-                ComPortDisconnect2.Enabled = true;
-
-                ComPortNumber2.Enabled = false;
-           
-            }
-            catch (Exception ex)
-            {
-                if (SerialPort2.IsOpen) SerialPort2.Close();
-
-                ComPortConnect2.Enabled = true;
-                ComPortDisconnect2.Enabled = false;
-
-                ComPortNumber2.Enabled = true;
-
-                Debug.WriteLine("ComPortConnect2_Click: " + ex.Message);
-                MessageBox.Show(ex.Message, "ComPortError " + SerialPort_value.port_name2);
-            }
-
-        }
-        private void ComPortConnect3_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SaveSettings();
-
-                SerialPort3.BaudRate = int.Parse(BaudComboBox.Text);
-                SerialPort3.PortName = ComPortNumber3.Text;
-                SerialPort3.DtrEnable = true;
-                SerialPort3.Open();
-                SerialPort3.DiscardInBuffer();
-                SerialPort3.DiscardOutBuffer();
-
-                BackgroundWorker3.RunWorkerAsync();
-
-                ComPortConnect3.Enabled = false;
-                ComPortDisconnect3.Enabled = true;
-
-                ComPortNumber3.Enabled = false;
-
-            }
-            catch (Exception ex)
-            {
-                if (SerialPort3.IsOpen) SerialPort3.Close();
-
-                ComPortConnect3.Enabled = true;
-                ComPortDisconnect3.Enabled = false;
-
-                ComPortNumber3.Enabled = true;
-
-                Debug.WriteLine("ComPortConnect3_Click: " + ex.Message);
-                MessageBox.Show(ex.Message, "ComPortError " + SerialPort_value.port_name3);
-            }
-
-        }
-        private void ComPortConnect4_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SaveSettings();
-
-                SerialPort4.BaudRate = int.Parse(BaudComboBox.Text);
-                SerialPort4.PortName = ComPortNumber4.Text;
-                SerialPort4.DtrEnable = true;
-                SerialPort4.Open();
-                SerialPort4.DiscardInBuffer();
-                SerialPort4.DiscardOutBuffer();
-
-                BackgroundWorker4.RunWorkerAsync();
-
-                ComPortConnect4.Enabled = false;
-                ComPortDisconnect4.Enabled = true;
-
-                ComPortNumber4.Enabled = false;
-
-            }
-            catch (Exception ex)
-            {
-                if (SerialPort4.IsOpen) SerialPort4.Close();
-
-                ComPortConnect4.Enabled = true;
-                ComPortDisconnect4.Enabled = false;
-
-                ComPortNumber4.Enabled = true;
-
-
-                Debug.WriteLine("ComPortConnect4_Click: " + ex.Message);
-                MessageBox.Show(ex.Message, "ComPortError " + SerialPort_value.port_name4);
-            }
-
-        }
-
-        private void ComPortDisconnect1_Click(object sender, EventArgs e)
+        private void RadioDisconnect(object sender, EventArgs e)
         {
 
-            if (BackgroundWorker1.IsBusy)
+            if (RadioBackgroundWorker.IsBusy)
             {
-                BackgroundWorker1.CancelAsync();
-                
-                while (BackgroundWorker1.IsBusy)
+                RadioBackgroundWorker.CancelAsync();
+
+                while (RadioBackgroundWorker.IsBusy)
                 {
                     Application.DoEvents();
                     System.Threading.Thread.Sleep(20);
                 }
-
             }
 
-            SerialPort1.DtrEnable = false;
-            SerialPort1.Close();
-            ComPortConnect1.Enabled = true;
-            ComPortDisconnect1.Enabled = false;
-            PttButtonRTS.Enabled = false;
-            PttButtonCIV.Enabled = false;
+            if (RadioSerialPort.IsOpen) { RadioSerialPort.Close(); }
 
-            buttonStartDummyLoad.Enabled = false;
-            buttonStopDummyLoad.Enabled = false;
+            RadioButton(false);
+        }
+        private void RadioButton(bool active) 
+        {
+            RadioConnectButton.Enabled = !active;
+            RadioDisconnectButton.Enabled = active;
+            RadioComPortList.Enabled = !active;
+            RadioBaudList.Enabled = !active;
 
-            ComPortNumber1.Enabled = true;
-            BaudComboBox.Enabled = true;
+            TXButton.Enabled = active;
+
+            StartDummyLoadButton.Enabled = active;
+            StopDummyLoadButton.Enabled = active;
+
+            if (active)
+            {
+                RadioLed.BackColor = Color.LightBlue;
+            }
+            else
+            {
+                RadioLed.BackColor = default;
+                RadioLed.UseVisualStyleBackColor = true;
+            }
+        }
+
+        private void Program1Connect(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveSettings();
+
+                Program1SerialPort.BaudRate = int.Parse(RadioBaudList.Text);
+                Program1SerialPort.PortName = Program1Com0comList.Text.Substring(0,5);
+                Program1SerialPort.DtrEnable = true;
+                Program1SerialPort.Open();
+                Program1SerialPort.DiscardInBuffer();
+                Program1SerialPort.DiscardOutBuffer();
+
+                Program1BackgroundWorker.RunWorkerAsync();
+                Program1Button(true);
+
+            }
+            catch (Exception ex)
+            {
+                if (Program1SerialPort.IsOpen) Program1SerialPort.Close();
+
+                Program1Button(false);
+
+                Debug.WriteLine("Program1Connect: " + ex.Message);
+                MessageBox.Show(ex.Message, "Program1ComPortError " + SerialPort_value.portProgram1Name);
+            }
 
         }
-        private void ComPortDisconnect2_Click(object sender, EventArgs e)
+        private void Program1Disconnect(object sender, EventArgs e)
         {
 
-            BackgroundWorker2.CancelAsync();
+            Program1BackgroundWorker.CancelAsync();
 
-            while (BackgroundWorker2.IsBusy)
+            while (Program1BackgroundWorker.IsBusy)
             {
                 Application.DoEvents();
                 System.Threading.Thread.Sleep(20);
             }
 
-            SerialPort2.DtrEnable = false;
-            SerialPort2.Close();
-            ComPortConnect2.Enabled = true;
-            ComPortDisconnect2.Enabled = false;
+            Program1SerialPort.DtrEnable = false;
+            Program1SerialPort.Close();
+            
+            Program1Button(false);
+        }
+        private void Program1Button(bool active)
+        {
+            Program1ConnectButton.Enabled = !active;
+            Program1DisconnectButton.Enabled = active;
+            Program1Com0comList.Enabled = !active;
 
-            ComPortNumber2.Enabled = true;
+            if (active)
+            {
+                Program1Led.BackColor = Color.LightBlue;
+            }
+            else
+            {
+                Program1Led.BackColor = default;
+                Program1Led.UseVisualStyleBackColor = true;
+            }
+        }
+
+        private void Program2Connect(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveSettings();
+
+                Program2SerialPort.BaudRate = int.Parse(RadioBaudList.Text);
+                Program2SerialPort.PortName = Program2Com0comList.Text.Substring(0, 5);
+                Program2SerialPort.DtrEnable = true;
+                Program2SerialPort.Open();
+                Program2SerialPort.DiscardInBuffer();
+                Program2SerialPort.DiscardOutBuffer();
+
+                Program2BackgroundWorker.RunWorkerAsync();
+                Program2Button(true);
+            }
+            catch (Exception ex)
+            {
+                if (Program2SerialPort.IsOpen) Program2SerialPort.Close();
+
+                Program2Button(false);
+
+                Debug.WriteLine("Program2Connect: " + ex.Message);
+                MessageBox.Show(ex.Message, "Program2ComPortError " + SerialPort_value.portProgram2Name);
+            }
 
         }
-        private void ComPortDisconnect3_Click(object sender, EventArgs e)
+        private void Program2Disconnect(object sender, EventArgs e)
         {
 
-            BackgroundWorker3.CancelAsync();
+            Program2BackgroundWorker.CancelAsync();
 
-            while (BackgroundWorker3.IsBusy)
+            while (Program2BackgroundWorker.IsBusy)
             {
                 Application.DoEvents();
                 System.Threading.Thread.Sleep(20);
             }
 
-            SerialPort3.DtrEnable = false;
-            SerialPort3.Close();
-            ComPortConnect3.Enabled = true;
-            ComPortDisconnect3.Enabled = false;
+            Program2SerialPort.DtrEnable = false;
+            Program2SerialPort.Close();
 
-            ComPortNumber3.Enabled = true;
+            Program2Button(false);
+        }
+        private void Program2Button(bool active)
+        {
+            Program2ConnectButton.Enabled = !active;
+            Program2DisconnectButton.Enabled = active;
+            Program2Com0comList.Enabled = !active;
+
+            if (active)
+            {
+                Program2Led.BackColor = Color.LightBlue;
+            }
+            else
+            {
+                Program2Led.BackColor = default;
+                Program2Led.UseVisualStyleBackColor = true;
+            }
+        }
+
+        private void Program3Connect(object sender, EventArgs e)
+        {
+            
+            try
+            {
+                SaveSettings();
+
+                Program3SerialPort.BaudRate = int.Parse(RadioBaudList.Text);
+                Program3SerialPort.PortName = Program3Com0comList.Text.Substring(0, 5);
+                Program3SerialPort.DtrEnable = true;
+                Program3SerialPort.Open();
+                Program3SerialPort.DiscardInBuffer();
+                Program3SerialPort.DiscardOutBuffer();
+
+                Program3BackgroundWorker.RunWorkerAsync();
+                Program3Button(true);
+            }
+            catch (Exception ex)
+            {
+                if (Program3SerialPort.IsOpen) Program3SerialPort.Close();
+
+                Program3Button(false);
+
+                Debug.WriteLine("Program3Connect: " + ex.Message);
+                MessageBox.Show(ex.Message, "Program3ComPortError " + SerialPort_value.portProgram3Name);
+            }
 
         }
-        private void ComPortDisconnect4_Click(object sender, EventArgs e)
+        private void Program3Disconnect(object sender, EventArgs e)
         {
 
-            BackgroundWorker4.CancelAsync();
+            Program3BackgroundWorker.CancelAsync();
 
-            while (BackgroundWorker4.IsBusy)
+            while (Program3BackgroundWorker.IsBusy)
             {
                 Application.DoEvents();
                 System.Threading.Thread.Sleep(20);
             }
 
-            SerialPort4.DtrEnable = false;
-            SerialPort4.Close();
-            ComPortConnect4.Enabled = true;
-            ComPortDisconnect4.Enabled = false;
+            Program3SerialPort.DtrEnable = false;
+            Program3SerialPort.Close();
 
-            ComPortNumber4.Enabled = true;
+            Program3Button(false);
+        }
+        private void Program3Button(bool active)
+        {
+            Program3ConnectButton.Enabled = !active;
+            Program3DisconnectButton.Enabled = active;
+            Program3Com0comList.Enabled = !active;
 
-        }
-
-        private void PttPress(object sender, KeyEventArgs e)
-        {
-            this.FunctionPttRts(true, "Button");
-        }
-        private void PttRelease(object sender, KeyEventArgs e)
-        {
-            this.FunctionPttRts(false, "Button");
-        }
-        private void PttPress(object sender, MouseEventArgs e)
-        {
-            this.FunctionPttRts(true, "Button");
-        }
-        private void PttRelease(object sender, MouseEventArgs e)
-        {
-            this.FunctionPttRts(false, "Button");
+            if (active)
+            {
+                Program3Led.BackColor = Color.LightBlue;
+            }
+            else
+            {
+                Program3Led.BackColor = default;
+                Program3Led.UseVisualStyleBackColor = true;
+            }
         }
 
-        private void PttPressCIV(object sender, KeyEventArgs e)
+
+        private void TXPress(object sender, KeyEventArgs e)
         {
-            this.FunctionPttCIV(true, "Button");
+            this.FunctionTX(true, "Button");
         }
-        private void PttReleaseCIV(object sender, KeyEventArgs e)
+        private void TXRelease(object sender, KeyEventArgs e)
         {
-            this.FunctionPttCIV(false, "Button");
+            this.FunctionTX(false, "Button");
         }
-        private void PttPressCIV(object sender, MouseEventArgs e)
+        private void TXPress(object sender, MouseEventArgs e)
         {
-            this.FunctionPttCIV(true, "Button");
+            this.FunctionTX(true, "Button");
         }
-        private void PttReleaseCIV(object sender, MouseEventArgs e)
+        private void TXRelease(object sender, MouseEventArgs e)
         {
-            this.FunctionPttCIV(false, "Button");
+            this.FunctionTX(false, "Button");
         }
 
-        private void SerialPort2_PinChanged(object sender, SerialPinChangedEventArgs e)
+        private void Program1SerialPort_PinChanged(object sender, SerialPinChangedEventArgs e)
         {
 
             if (e.EventType == SerialPinChange.CtsChanged)
             {
-                FunctionPttRts(SerialPort2.CtsHolding, SerialPort_value.port_name2);
+                FunctionTX(Program1SerialPort.CtsHolding, SerialPort_value.portProgram1Name);
             }
         }
-        private void SerialPort3_PinChanged(object sender, SerialPinChangedEventArgs e)
+        private void Program2SerialPort_PinChanged(object sender, SerialPinChangedEventArgs e)
         {
             
             if (e.EventType == SerialPinChange.CtsChanged)
             {
-                FunctionPttRts(SerialPort3.CtsHolding, SerialPort_value.port_name3);
+                FunctionTX(Program2SerialPort.CtsHolding, SerialPort_value.portProgram2Name);
             }
         }
-        private void SerialPort4_PinChanged(object sender, SerialPinChangedEventArgs e)
+        private void Program3SerialPort_PinChanged(object sender, SerialPinChangedEventArgs e)
         {
             
             if (e.EventType == SerialPinChange.CtsChanged)
             {
-                FunctionPttRts(SerialPort4.CtsHolding, SerialPort_value.port_name4);
+                FunctionTX(Program3SerialPort.CtsHolding, SerialPort_value.portProgram3Name);
             }
         }
 
-        private void PttCIV2RTS(byte[] Data, string sender)
+        private void FunctionSendCIV(byte[] Data, string sender)
         {
 
             if (Data.Length == 8)
@@ -848,31 +918,24 @@ namespace Icom_Proxy
                 Invoke((MethodInvoker)delegate
                 {
 
-                    if (SerialPort1.IsOpen)
+                    if (RadioSerialPort.IsOpen)
                     {
                         if (StructuralComparisons.StructuralEqualityComparer.Equals(PttOn, Data))
                         {
-                            PttButtonCIV.BackColor = Color.Red;
-                            if (checkBox_PTT_RTS.Checked)
-                            {
-                                PttButtonRTS.BackColor = Color.Red;
-                                SerialPort1.RtsEnable = true;
-                                TimerPTT_RTS.Enabled = true;
+                            TXButton.BackColor = Color.Red;
+
+                                RadioSerialPort.RtsEnable = true;
+                                TimerTX.Enabled = true;
                                 DebugLogTextInsert(sender, "PttCIV2RTS: on");
-                            }
                         }
                         if (StructuralComparisons.StructuralEqualityComparer.Equals(PttOff, Data))
                         {
-                            PttButtonCIV.BackColor = default(Color);
-                            PttButtonCIV.UseVisualStyleBackColor = true;
-                            if (checkBox_PTT_RTS.Checked)
-                            {
-                                PttButtonRTS.BackColor = default(Color);
-                                PttButtonRTS.UseVisualStyleBackColor = true;
-                                SerialPort1.RtsEnable = false;
-                                TimerPTT_RTS.Enabled = false;
+                            TXButton.BackColor = default;
+                            TXButton.UseVisualStyleBackColor = true;
+
+                                RadioSerialPort.RtsEnable = false;
+                                TimerTX.Enabled = false;
                                 DebugLogTextInsert(sender, "PttCIV2RTS: off");
-                            }
                         }
                     }
 
@@ -880,44 +943,7 @@ namespace Icom_Proxy
             }
 
         }
-        private void PttRTS2CIV(Boolean button, string sender) 
-        {
-            if (checkBox_PTT_CIV.Checked && sender != "Button")
-            {
-                FunctionPttCIV(button, sender + " - PttRTS2CIV");
-            }
-        }
-        private void FunctionPttRts(Boolean button, string sender)
-        {
-
-            Invoke((MethodInvoker)delegate
-            {
-                if (SerialPort1.IsOpen)
-                {
-                    if (button)
-                    {
-                        PttButtonRTS.BackColor = Color.Red;
-                        SerialPort1.RtsEnable = true;
-                        TimerPTT_RTS.Enabled = true;
-                        DebugLogTextInsert(sender, "PTT/RTS: on");
-                    }
-                    else
-                    {
-                        PttButtonRTS.BackColor = default(Color);
-                        PttButtonRTS.UseVisualStyleBackColor = true;
-                        SerialPort1.RtsEnable = false;
-                        TimerPTT_RTS.Enabled = false;
-                        DebugLogTextInsert(sender, "PTT/RTS: off");
-                    }
-
-                    PttRTS2CIV(button, sender);
-                }
-
-            });
-
-
-        }
-        private void FunctionPttCIV(Boolean button, string sender)
+        private void FunctionTX(Boolean button, string sender)
         {
             var PttOn = new byte[Radio.CIV.PttOn.Length];
             var PttOff = new byte[Radio.CIV.PttOff.Length];
@@ -927,20 +953,21 @@ namespace Icom_Proxy
 
             Invoke((MethodInvoker)delegate
             {
-                if (textBox_hex.TextLength > 0)
+                if (RadioHexTextBox.TextLength > 0)
                 {
-                    PttOn[2]  = Convert.ToByte(textBox_hex.Text, 16);
-                    PttOff[2] = Convert.ToByte(textBox_hex.Text, 16);
+                    PttOn[2]  = Convert.ToByte(RadioHexTextBox.Text, 16);
+                    PttOff[2] = Convert.ToByte(RadioHexTextBox.Text, 16);
                 }
 
                 if (button)
                 {
-                    if (SerialPort1.IsOpen)
+                    if (RadioSerialPort.IsOpen)
                     {
-                        PttButtonCIV.BackColor = Color.Red;
-                        SerialPort1.Write(PttOn, 0, PttOn.Length);
+                        TXButton.BackColor = Color.Red;
+                        RadioSerialPort.RtsEnable = true;
+                        RadioSerialPortWrite(PttOn, 0, PttOn.Length);                        
                         DebugLogTextInsert(sender, BitConverter.ToString(PttOn, 0, PttOn.Length).Replace("-", " "));
-                        TimerPTT_CIV.Enabled = true;
+                        TimerTX.Enabled = true;
                     }
                     else
                     {
@@ -950,13 +977,14 @@ namespace Icom_Proxy
                 }
                 else
                 {
-                    if (SerialPort1.IsOpen)
+                    if (RadioSerialPort.IsOpen)
                     {
-                        PttButtonCIV.BackColor = default(Color);
-                        PttButtonCIV.UseVisualStyleBackColor = true;
-                        SerialPort1.Write(PttOff, 0, PttOff.Length);
+                        TXButton.BackColor = default;
+                        TXButton.UseVisualStyleBackColor = true;
+                        RadioSerialPort.RtsEnable = false;
+                        RadioSerialPortWrite(PttOff, 0, PttOff.Length);
                         DebugLogTextInsert(sender, BitConverter.ToString(PttOff, 0, PttOff.Length).Replace("-", " "));
-                        TimerPTT_CIV.Enabled = false;
+                        TimerTX.Enabled = false;
                     }
                     else
                     {
@@ -967,6 +995,17 @@ namespace Icom_Proxy
             });
 
         }
+        private void RadioSerialPortWrite(byte[] sendByte, int byteStart, int byteLenght)
+        {
+            try
+            {
+                RadioSerialPort.Write(sendByte, byteStart, byteLenght);
+            }
+            catch (Exception)
+            {
+                DebugLogTextInsert("Radio", "Write-error");
+            }
+        }
 
         private void SaveSettings()
         {
@@ -974,26 +1013,24 @@ namespace Icom_Proxy
             {
                 try
                 {
-                    Properties.Settings.Default.BaudComboBox = BaudComboBox.Text;
+                    Properties.Settings.Default.BaudComboBox = RadioBaudList.Text;
 
-                    Properties.Settings.Default.ComPortNumber1 = ComPortNumber1.Text;
-                    Properties.Settings.Default.ComPortNumber2 = ComPortNumber2.Text;
-                    Properties.Settings.Default.ComPortNumber3 = ComPortNumber3.Text;
-                    Properties.Settings.Default.ComPortNumber4 = ComPortNumber4.Text;
+                    Properties.Settings.Default.ComPortNumberRadio = RadioComPortList.Text;
+                    Properties.Settings.Default.ComPortNumberProgram1 = Program1Com0comList.Text;
+                    Properties.Settings.Default.ComPortNumberProgram2 = Program2Com0comList.Text;
+                    Properties.Settings.Default.ComPortNumberProgram3 = Program3Com0comList.Text;
 
-                    Properties.Settings.Default.checkBox_PTT_RTS = checkBox_PTT_RTS.Checked;
-                    Properties.Settings.Default.checkBox_PTT_CIV = checkBox_PTT_CIV.Checked;
-                    Properties.Settings.Default.checkBox_FeedBack2 = checkBox_FeedBack2.Checked;
-                    Properties.Settings.Default.checkBox_FeedBack3 = checkBox_FeedBack3.Checked;
-                    Properties.Settings.Default.checkBox_FeedBack4 = checkBox_FeedBack4.Checked;
+                    Properties.Settings.Default.checkBox_FeedBackProgram1 = Program1FeedBackCheckBox.Checked;
+                    Properties.Settings.Default.checkBox_FeedBackProgram2 = Program2FeedBackCheckBox.Checked;
+                    Properties.Settings.Default.checkBox_FeedBackProgram3 = Program3FeedBackCheckBox.Checked;
 
                     Properties.Settings.Default.checkBoxForceCIV = checkBoxForceCIV.Checked;
 
-                    Properties.Settings.Default.port_name2 = SerialPort_value.port_name2;
-                    Properties.Settings.Default.port_name3 = SerialPort_value.port_name3;
-                    Properties.Settings.Default.port_name4 = SerialPort_value.port_name4;
+                    Properties.Settings.Default.port_nameProgram1 = SerialPort_value.portProgram1Name;
+                    Properties.Settings.Default.port_nameProgram2 = SerialPort_value.portProgram2Name;
+                    Properties.Settings.Default.port_nameProgram3 = SerialPort_value.portProgram3Name;
 
-                    Properties.Settings.Default.Ptt_timeout = TimerPTT_CIV.Interval / 1000;
+                    Properties.Settings.Default.Ptt_timeout = TimerTX.Interval / 1000;
 
                     Properties.Settings.Default.Save();
                 }
@@ -1012,44 +1049,39 @@ namespace Icom_Proxy
             {
                 try
                 {
-                    BaudComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Icom_Proxy.Properties.Settings.Default, "BaudComboBox", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-                    BaudComboBox.Text = global::Icom_Proxy.Properties.Settings.Default.BaudComboBox;
+                    RadioBaudList.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Icom_Proxy.Properties.Settings.Default, "BaudComboBox", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+                    RadioBaudList.Text = global::Icom_Proxy.Properties.Settings.Default.BaudComboBox;
 
-                    ComPortNumber1.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumber1;
-                    ComPortNumber2.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumber2;
-                    ComPortNumber3.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumber3;
-                    ComPortNumber4.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumber4;
+                    RadioComPortList.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumberRadio;
+                    Program1Com0comList.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumberProgram1;
+                    Program2Com0comList.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumberProgram2;
+                    Program3Com0comList.Text = global::Icom_Proxy.Properties.Settings.Default.ComPortNumberProgram3;
 
-                    checkBox_PTT_RTS.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_PTT_RTS;
-                    checkBox_PTT_CIV.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_PTT_CIV;
-                    checkBox_FeedBack2.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_FeedBack2;
-                    checkBox_FeedBack3.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_FeedBack3;
-                    checkBox_FeedBack4.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_FeedBack4;
+                    Program1FeedBackCheckBox.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_FeedBackProgram1;
+                    Program2FeedBackCheckBox.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_FeedBackProgram2;
+                    Program3FeedBackCheckBox.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBox_FeedBackProgram3;
                     checkBoxForceCIV.Checked = global::Icom_Proxy.Properties.Settings.Default.checkBoxForceCIV;
 
-                    if (global::Icom_Proxy.Properties.Settings.Default.port_name2 != "") SerialPort_value.port_name2 = global::Icom_Proxy.Properties.Settings.Default.port_name2;
-                    if (global::Icom_Proxy.Properties.Settings.Default.port_name3 != "") SerialPort_value.port_name3 = global::Icom_Proxy.Properties.Settings.Default.port_name3;
-                    if (global::Icom_Proxy.Properties.Settings.Default.port_name4 != "") SerialPort_value.port_name4 = global::Icom_Proxy.Properties.Settings.Default.port_name4;
+                    if (global::Icom_Proxy.Properties.Settings.Default.port_nameProgram1 != "")
+                    { Program1NameTextBox.Text = SerialPort_value.portProgram1Name = global::Icom_Proxy.Properties.Settings.Default.port_nameProgram1; }
+                    if (global::Icom_Proxy.Properties.Settings.Default.port_nameProgram2 != "")
+                    { Program2NameTextBox.Text = SerialPort_value.portProgram2Name = global::Icom_Proxy.Properties.Settings.Default.port_nameProgram2; }
+                    if (global::Icom_Proxy.Properties.Settings.Default.port_nameProgram3 != "")
+                    { Program3NameTextBox.Text = SerialPort_value.portProgram3Name = global::Icom_Proxy.Properties.Settings.Default.port_nameProgram3; }
 
-                    label_port_name2.Text = SerialPort_value.port_name2;
-                    label_port_name3.Text = SerialPort_value.port_name3;
-                    label_port_name4.Text = SerialPort_value.port_name4;
-
-                    textBox_port_name2.Text = SerialPort_value.port_name2;
-                    textBox_port_name3.Text = SerialPort_value.port_name3;
-                    textBox_port_name4.Text = SerialPort_value.port_name4;
+                    //Program1NameTextBox.Text = SerialPort_value.portProgram1Name;
+                    //Program2NameTextBox.Text = SerialPort_value.portProgram2Name;
+                    //Program3NameTextBox.Text = SerialPort_value.portProgram3Name;
 
                     if (global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout != 0)
                     {
-                        textBox_Ptt_timeout.Text = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout.ToString();
-                        TimerPTT_CIV.Interval    = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout * 1000;
-                        TimerPTT_RTS.Interval    = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout * 1000;
-                    }
+                        RadioTxTimeoutTextBox.Text = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout.ToString();
+                        TimerTX.Interval    = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout * 1000;
+                     }
                     else
                     {
-                        textBox_Ptt_timeout.Text = "300";
-                        TimerPTT_CIV.Interval = 300 * 1000;
-                        TimerPTT_RTS.Interval = 300 * 1000;
+                        RadioTxTimeoutTextBox.Text = "300";
+                        TimerTX.Interval = 300 * 1000;
                     }
 
 
@@ -1064,90 +1096,113 @@ namespace Icom_Proxy
             
         }
 
+        static void StartProcess(string _FileName, string _WorkingDirectory="")
+        {
+            Process proc = new Process {
+                StartInfo = 
+                {
+                    FileName = _FileName,
+                    WorkingDirectory = _WorkingDirectory,
+                }
+            };
+            proc.Start();
+        }
+
         private void DevButtonClick(object sender, EventArgs e)
         {
-            Process.Start("mmsys.cpl");
+            StartProcess("mmsys.cpl");
 
         }
         private void SoundButtonClick(object sender, EventArgs e)
         {
-            Process.Start("devmgmt.msc");
+            StartProcess("devmgmt.msc");
         }
         private void Com0comButtonClick(object sender, EventArgs e)
         {
-            string pathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\com0com\setupg.exe";
-            string pathx64 = Environment.GetEnvironmentVariable("ProgramFiles") + @"\com0com\setupg.exe";
+            string pathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\com0com\";
+            string pathx64 = Environment.GetEnvironmentVariable("ProgramFiles") + @"\com0com\";
+            string exe = @"setupg.exe";
 
-            if (File.Exists(pathx86)) { Process.Start(pathx86); }
-            else if (File.Exists(pathx64)) { Process.Start(pathx64); }
+            if (File.Exists(pathx86 + exe)) {StartProcess(pathx86 + exe, pathx86);}
+            else if (File.Exists(pathx64 + exe)) {StartProcess(pathx64 + exe, pathx64);}
             else MessageBox.Show("Cannot find com0com, maybe it not installed?", "com0com");
-
         }
 
-        private void TextBox_port_name2_TextChanged(object sender, EventArgs e)
+        private void ProgramName_Update(object sender, EventArgs e)
         {
-            if (textBox_port_name2.Text != "") 
+            if (Program1NameTextBox.Text != "") 
             {
-                SerialPort_value.port_name2 = textBox_port_name2.Text;
+                SerialPort_value.portProgram1Name = Program1NameTextBox.Text;
+                if (SerialPort_value.portProgram1Name.Replace(" ","").ToLower() =="varac")
+                {
+                    Program1FeedBackCheckBox.Checked = true;
+                }
             }
             else
             {
-                SerialPort_value.port_name2 = "Program 1";
+                SerialPort_value.portProgram1Name = "Program 1";
             }
 
-            label_port_name2.Text = SerialPort_value.port_name2;
-            SaveSettings();
-        }
-        private void TextBox_port_name3_TextChanged(object sender, EventArgs e)
-        {
-            if (textBox_port_name3.Text != "")
+            if (Program2NameTextBox.Text != "")
             {
-                SerialPort_value.port_name3 = textBox_port_name3.Text;
+                SerialPort_value.portProgram2Name = Program2NameTextBox.Text;
+                if (SerialPort_value.portProgram2Name.Replace(" ", "").ToLower() == "varac")
+                {
+                    Program2FeedBackCheckBox.Checked = true;
+                }
             }
             else
             {
-                SerialPort_value.port_name3 = "Program 2";
+                SerialPort_value.portProgram2Name = "Program 2";
             }
 
-            label_port_name3.Text = SerialPort_value.port_name3;
-            SaveSettings();
-        }
-        private void TextBox_port_name4_TextChanged(object sender, EventArgs e)
-        {
-            if (textBox_port_name4.Text != "")
+            if (Program3NameTextBox.Text != "")
             {
-                SerialPort_value.port_name4 = textBox_port_name4.Text;
+                SerialPort_value.portProgram3Name = Program3NameTextBox.Text;
+                if (SerialPort_value.portProgram3Name.Replace(" ", "").ToLower() == "varac")
+                {
+                    Program3FeedBackCheckBox.Checked = true;
+                }
             }
             else
             {
-                SerialPort_value.port_name4 = "Program 3";
+                SerialPort_value.portProgram3Name = "Program 3";
             }
 
-            label_port_name4.Text = SerialPort_value.port_name4;
+            ProgramInfoBoxes_Update("",null);
             SaveSettings();
+
         }
 
-        private void TextBox_Ptt_timeout_TextChanged(object sender, EventArgs e)
+        private void ToneInfoUpdate() 
+        {
+            toneInfoBox.Text = "1 Begin with setting your soundcard to Windows default.\n"
+                             + "2 Check one, two or many tones.\n"
+                             + "3 Tonelength is " + ToneLengthBox .Text + " seconds after which it will automatic end,\n"
+                             + "    but you can always stop it before that time.";
+        }
+
+
+        private void RadioTxTimeoutTextBox_Changed(object sender, EventArgs e)
         {
             int value;
             
-            if (System.Text.RegularExpressions.Regex.IsMatch(textBox_Ptt_timeout.Text, "[^0-9]"))
+            if (System.Text.RegularExpressions.Regex.IsMatch(RadioTxTimeoutTextBox.Text, "[^0-9]"))
             {
                 MessageBox.Show("Please enter only numbers.");
-                textBox_Ptt_timeout.Text = textBox_Ptt_timeout.Text.Remove(textBox_Ptt_timeout.Text.Length - 1);
+                RadioTxTimeoutTextBox.Text = RadioTxTimeoutTextBox.Text.Remove(RadioTxTimeoutTextBox.Text.Length - 1);
             }
             
-            if (int.TryParse(textBox_Ptt_timeout.Text, out value))
+            if (int.TryParse(RadioTxTimeoutTextBox.Text, out value))
             {
-                TimerPTT_CIV.Interval = value*1000;
-                TimerPTT_RTS.Interval = value*1000;
+                TimerTX.Interval = value*1000;
                 SaveSettings();
             }
 
             
         }
 
-        private void checkBox_DL_Enabled(bool TrueOrFalse)
+        private void CheckBox_DL_Enabled(bool TrueOrFalse)
         {
             checkBox_DL_0100.Enabled = TrueOrFalse;
             checkBox_DL_0200.Enabled = TrueOrFalse;
@@ -1179,16 +1234,14 @@ namespace Icom_Proxy
             checkBox_DL_2800.Enabled = TrueOrFalse;
             checkBox_DL_2900.Enabled = TrueOrFalse;
 
-            PttButtonRTS.Enabled = TrueOrFalse;
-            PttButtonCIV.Enabled = TrueOrFalse;
+            TXButton.Enabled = TrueOrFalse;
             com0comButton.Enabled = TrueOrFalse;
             SoundButton.Enabled = TrueOrFalse;
             DeviceButton.Enabled = TrueOrFalse;
 
-            textBoxDLTimeOut.Enabled = TrueOrFalse;
+            ToneLengthBox.Enabled = TrueOrFalse;
 
-            tabPageComPort.Enabled = TrueOrFalse;
-            tabPageSettings.Enabled = TrueOrFalse;
+            tabPageProgram.Enabled = TrueOrFalse;
 
 
 
@@ -1197,11 +1250,11 @@ namespace Icom_Proxy
         MemoryStream mStrm;
         BinaryWriter writer;
 
-        private void startDummyLoad()
+        private void StartDummyLoad()
         {
             int sDuration = 10;
             
-            if (int.TryParse(textBoxDLTimeOut.Text, out sDuration))
+            if (int.TryParse(ToneLengthBox.Text, out sDuration))
             {
                 if ((sDuration < 1) || (sDuration > 3600))
                 {
@@ -1213,10 +1266,9 @@ namespace Icom_Proxy
             writer = new BinaryWriter(mStrm);
 
             PlayFile(MakeFileTot(8820*5));
-            checkBox_DL_Enabled(false);
+            CheckBox_DL_Enabled(false);
 
-            this.FunctionPttRts(true, "DummyLoad");
-            this.FunctionPttCIV(true, "DummyLoad");
+            this.FunctionTX(true, "DummyLoad");
 
             TimerDummyLoad.Interval = sDuration * 1000;
             TimerDummyLoad.Enabled = true;
@@ -1225,46 +1277,44 @@ namespace Icom_Proxy
 
         }
 
-        private void stopDummyLoad()
+        private void StopDummyLoad()
         {
-            checkBox_DL_Enabled(true);
+            CheckBox_DL_Enabled(true);
             writer.Close();
             mStrm.Close();
-            this.FunctionPttRts(false, "DummyLoad");
-            this.FunctionPttCIV(false, "DummyLoad");
+            this.FunctionTX(false, "DummyLoad");
             sPlayer.Dispose();
             sPlayer.Stop();
             TimerDummyLoad.Enabled = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void StartDummyLoad_Click(object sender, EventArgs e)
         {
-            startDummyLoad();
+            StartDummyLoad();
         }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void StopDummyLoad_Click(object sender, EventArgs e)
         {
-            stopDummyLoad();
+            StopDummyLoad();
         }
-
-        private void textBoxDLTimeOut_TextChanged(object sender, EventArgs e)
+        private void TextBoxDLTimeOut_TextChanged(object sender, EventArgs e)
         {
             int value;
 
-            if (System.Text.RegularExpressions.Regex.IsMatch(textBoxDLTimeOut.Text, "[^0-9]"))
+            if (System.Text.RegularExpressions.Regex.IsMatch(ToneLengthBox.Text, "[^0-9]"))
             {
                 MessageBox.Show("Please enter only numbers.");
-                textBoxDLTimeOut.Text = textBoxDLTimeOut.Text.Remove(textBoxDLTimeOut.Text.Length - 1);
+                ToneLengthBox.Text = ToneLengthBox.Text.Remove(ToneLengthBox.Text.Length - 1);
             }
 
-            if (int.TryParse(textBoxDLTimeOut.Text, out value))
+            if (int.TryParse(ToneLengthBox.Text, out value))
             {
                 TimerDummyLoad.Interval = value * 1000 + 1;
                 SaveSettings();
             }
-        }
 
-        public int[] preWaveFile(int samples)
+            ToneInfoUpdate();
+        }
+        public int[] PreWaveFile(int samples)
         {
             int TextRIFF = 0x46464952; // = encoding.GetBytes("RIFF")
             int TextWAVE = 0x45564157; // = encoding.GetBytes("WAVE")
@@ -1302,7 +1352,6 @@ namespace Icom_Proxy
             return returnArray;
 
         }
-
         public int[] MakeTone(int samples)
         {
             int[] tone = CheckTone();
@@ -1332,11 +1381,10 @@ namespace Icom_Proxy
                 }
             return s2;
         }
-
         public int[] MakeFileTot(int samples, UInt16 volume = 16383)
         {
 
-            int[] s1 = preWaveFile(samples);
+            int[] s1 = PreWaveFile(samples);
             int[] s2 = MakeTone(samples);
 
             Array.Resize(ref s1, s1.Length + s2.Length);
@@ -1347,7 +1395,6 @@ namespace Icom_Proxy
         }
         public int[] CheckTone()
         {
-
             int[] tone = new int[30];
 
             if (checkBox_DL_0100.Checked) { tone[01] = 1; }
@@ -1411,13 +1458,75 @@ namespace Icom_Proxy
 
         private void RefreshButton_Click(object sender, EventArgs e)
         {
-            comportUpdate("Button");
+            ComPortUpdate("Button");
         }
-
         private void TrashButton_Click(object sender, EventArgs e)
         {
             DebugLogRemoveLines(0);
 
+        }
+
+        private void ProgramInfoBoxes_Update(object sender, EventArgs e)
+        {
+            if (Program1Com0comList.Text != "" && Program1Com0comList.Text.Length == 13)
+            {
+                Program1infoBox.Text = "Info: \r\nWith " + Program1NameTextBox.Text + " use " + Program1Com0comList.Text.Substring(8, 5).Trim();
+
+                if (Program1FeedBackCheckBox.Checked && SerialPort_value.portProgram1Name.Replace(" ", "").ToLower() != "varac")
+                {
+                    Program1infoBox.Text += "\r\n\r\nUse only Feedback if " + Program1NameTextBox.Text + " needs it.";
+                }
+            }
+            else
+            {
+                Program1infoBox.Text = "";
+            }
+
+            if (Program2Com0comList.Text != "" && Program2Com0comList.Text.Length == 13)
+            {
+                Program2infoBox.Text = "Info: \r\nWith " + Program2NameTextBox.Text + " use " + Program2Com0comList.Text.Substring(8, 5).Trim();
+
+                if (Program2FeedBackCheckBox.Checked && SerialPort_value.portProgram2Name.Replace(" ", "").ToLower() != "varac")
+                {
+                    Program2infoBox.Text += "\r\n\r\nUse only Feedback if " + Program2NameTextBox.Text + " needs it.";
+                }
+            }
+            else
+            {
+                Program2infoBox.Text = "";
+            }
+
+            if (Program3Com0comList.Text != "" && Program3Com0comList.Text.Length == 13)
+            {
+                Program3infoBox.Text = "Info: \r\nWith " + Program3NameTextBox.Text + " use " + Program3Com0comList.Text.Substring(8, 5).Trim();
+
+                if (Program3FeedBackCheckBox.Checked && SerialPort_value.portProgram3Name.Replace(" ", "").ToLower() != "varac")
+                {
+                    Program3infoBox.Text += "\r\n\r\nUse only Feedback if " + Program3NameTextBox.Text + " needs it.";
+                }
+            }
+            else
+            {
+                Program3infoBox.Text = "";
+            }
+
+        }
+
+        private void OpenExplorerForConfigFile(object sender, EventArgs e)
+        {
+            var path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            StartProcess(Path.GetDirectoryName(path));
+        }
+
+        private void ShowToneTestButton_Click(object sender, EventArgs e)
+        {
+            var tabPage = tabControl1.TabPages[tabPageTone.Name];
+            if (tabPage == null)
+            {
+                tabControl1.TabPages.Add(tabPageTone);
+            }
+
+            tabControl1.SelectedTab = tabPageTone;
         }
     }
 }

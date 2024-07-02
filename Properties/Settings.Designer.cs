@@ -38,48 +38,48 @@ namespace Icom_Proxy.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM0")]
-        public string ComPortNumber1 {
+        public string ComPortNumberRadio {
             get {
-                return ((string)(this["ComPortNumber1"]));
+                return ((string)(this["ComPortNumberRadio"]));
             }
             set {
-                this["ComPortNumber1"] = value;
+                this["ComPortNumberRadio"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM0")]
-        public string ComPortNumber2 {
+        [global::System.Configuration.DefaultSettingValueAttribute("com0com")]
+        public string ComPortNumberProgram1 {
             get {
-                return ((string)(this["ComPortNumber2"]));
+                return ((string)(this["ComPortNumberProgram1"]));
             }
             set {
-                this["ComPortNumber2"] = value;
+                this["ComPortNumberProgram1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM0")]
-        public string ComPortNumber3 {
+        [global::System.Configuration.DefaultSettingValueAttribute("com0com")]
+        public string ComPortNumberProgram2 {
             get {
-                return ((string)(this["ComPortNumber3"]));
+                return ((string)(this["ComPortNumberProgram2"]));
             }
             set {
-                this["ComPortNumber3"] = value;
+                this["ComPortNumberProgram2"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM0")]
-        public string ComPortNumber4 {
+        [global::System.Configuration.DefaultSettingValueAttribute("com0com")]
+        public string ComPortNumberProgram3 {
             get {
-                return ((string)(this["ComPortNumber4"]));
+                return ((string)(this["ComPortNumberProgram3"]));
             }
             set {
-                this["ComPortNumber4"] = value;
+                this["ComPortNumberProgram3"] = value;
             }
         }
         
@@ -110,36 +110,36 @@ namespace Icom_Proxy.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool checkBox_FeedBack2 {
+        public bool checkBox_FeedBackProgram1 {
             get {
-                return ((bool)(this["checkBox_FeedBack2"]));
+                return ((bool)(this["checkBox_FeedBackProgram1"]));
             }
             set {
-                this["checkBox_FeedBack2"] = value;
+                this["checkBox_FeedBackProgram1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool checkBox_FeedBack3 {
+        public bool checkBox_FeedBackProgram2 {
             get {
-                return ((bool)(this["checkBox_FeedBack3"]));
+                return ((bool)(this["checkBox_FeedBackProgram2"]));
             }
             set {
-                this["checkBox_FeedBack3"] = value;
+                this["checkBox_FeedBackProgram2"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool checkBox_FeedBack4 {
+        public bool checkBox_FeedBackProgram3 {
             get {
-                return ((bool)(this["checkBox_FeedBack4"]));
+                return ((bool)(this["checkBox_FeedBackProgram3"]));
             }
             set {
-                this["checkBox_FeedBack4"] = value;
+                this["checkBox_FeedBackProgram3"] = value;
             }
         }
         
@@ -158,36 +158,36 @@ namespace Icom_Proxy.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Program 1")]
-        public string port_name2 {
+        public string port_nameProgram1 {
             get {
-                return ((string)(this["port_name2"]));
+                return ((string)(this["port_nameProgram1"]));
             }
             set {
-                this["port_name2"] = value;
+                this["port_nameProgram1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Program 2")]
-        public string port_name3 {
+        public string port_nameProgram2 {
             get {
-                return ((string)(this["port_name3"]));
+                return ((string)(this["port_nameProgram2"]));
             }
             set {
-                this["port_name3"] = value;
+                this["port_nameProgram2"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Program 3")]
-        public string port_name4 {
+        public string port_nameProgram3 {
             get {
-                return ((string)(this["port_name4"]));
+                return ((string)(this["port_nameProgram3"]));
             }
             set {
-                this["port_name4"] = value;
+                this["port_nameProgram3"] = value;
             }
         }
         

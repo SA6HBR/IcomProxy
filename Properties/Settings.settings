@@ -5,17 +5,17 @@
     <Setting Name="BaudComboBox" Type="System.String" Scope="User">
       <Value Profile="(Default)">1200</Value>
     </Setting>
-    <Setting Name="ComPortNumber1" Type="System.String" Scope="User">
+    <Setting Name="ComPortNumberRadio" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM0</Value>
     </Setting>
-    <Setting Name="ComPortNumber2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM0</Value>
+    <Setting Name="ComPortNumberProgram1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">com0com</Value>
     </Setting>
-    <Setting Name="ComPortNumber3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM0</Value>
+    <Setting Name="ComPortNumberProgram2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">com0com</Value>
     </Setting>
-    <Setting Name="ComPortNumber4" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM0</Value>
+    <Setting Name="ComPortNumberProgram3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">com0com</Value>
     </Setting>
     <Setting Name="checkBox_PTT_RTS" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -23,25 +23,25 @@
     <Setting Name="checkBox_PTT_CIV" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="checkBox_FeedBack2" Type="System.Boolean" Scope="User">
+    <Setting Name="checkBox_FeedBackProgram1" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="checkBox_FeedBack3" Type="System.Boolean" Scope="User">
+    <Setting Name="checkBox_FeedBackProgram2" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="checkBox_FeedBack4" Type="System.Boolean" Scope="User">
+    <Setting Name="checkBox_FeedBackProgram3" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="checkBoxForceCIV" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="port_name2" Type="System.String" Scope="User">
+    <Setting Name="port_nameProgram1" Type="System.String" Scope="User">
       <Value Profile="(Default)">Program 1</Value>
     </Setting>
-    <Setting Name="port_name3" Type="System.String" Scope="User">
+    <Setting Name="port_nameProgram2" Type="System.String" Scope="User">
       <Value Profile="(Default)">Program 2</Value>
     </Setting>
-    <Setting Name="port_name4" Type="System.String" Scope="User">
+    <Setting Name="port_nameProgram3" Type="System.String" Scope="User">
       <Value Profile="(Default)">Program 3</Value>
     </Setting>
     <Setting Name="Ptt_timeout" Type="System.Int32" Scope="User">
