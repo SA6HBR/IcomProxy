@@ -12,7 +12,7 @@ You need to tune in the right resistor to get good sound
 
 ## Useful Links
 
-* [Download latest (2.0.7) Icom_Proxy.exe](https://github.com/SA6HBR/IcomProxy/releases/download/2.07/Icom_Proxy.exe)
+* [Download latest (2.0.7) Icom_Proxy.exe](https://github.com/SA6HBR/IcomProxy/releases/download/2.0.7/Icom_Proxy.exe)
 * [Manual](https://github.com/SA6HBR/IcomProxy/blob/main/doc/IcomProxyManual.pdf)
 * [Null-modem emulator (com0com)](https://sourceforge.net/projects/com0com/)
 * [MiKTeX](https://miktex.org/)
