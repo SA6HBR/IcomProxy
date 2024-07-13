@@ -60,7 +60,8 @@ namespace Icom_Proxy
             Program3BackgroundWorker.DoWork += Program3BackgroundWorker_DoWork;
             Program3BackgroundWorker.ProgressChanged += Program3BackgroundWorker_ProgressChanged;
 
-            TimerTX.Tick += TimerTX_of;
+            TimerRTS.Tick += TimerRTS_of;
+            TimerCIV.Tick += TimerCIV_of;
 
             TimerFindMyRadio.Tick += TimerFindMyRadioLoop;
             TimerFindMyRadio.Interval = 200;
@@ -87,7 +88,8 @@ namespace Icom_Proxy
         public static SerialPort Program2SerialPort = new SerialPort();
         public static SerialPort Program3SerialPort = new SerialPort();
 
-        public static System.Windows.Forms.Timer TimerTX = new System.Windows.Forms.Timer();
+        public static System.Windows.Forms.Timer TimerRTS = new System.Windows.Forms.Timer();
+        public static System.Windows.Forms.Timer TimerCIV = new System.Windows.Forms.Timer();
         public static System.Windows.Forms.Timer TimerFindMyRadio = new System.Windows.Forms.Timer();
         public static System.Windows.Forms.Timer TimerDummyLoad = new System.Windows.Forms.Timer();
         public static System.Windows.Forms.Timer TimerCheckProgram = new System.Windows.Forms.Timer();
@@ -248,10 +250,15 @@ namespace Icom_Proxy
             DebugLogTextInsert(program, "Check Comport");
 
         }
-        private void TimerTX_of(object sender, EventArgs e)
+        private void TimerRTS_of(object sender, EventArgs e)
         {
-            this.FunctionTX(false, "Timer");
-            TimerTX.Enabled = false;
+            this.FunctionRtsPtt(false, "Timer-RTS");
+            TimerRTS.Enabled = false;
+        }
+        private void TimerCIV_of(object sender, EventArgs e)
+        {
+            this.FunctionCivPtt(false, "Timer-CIV");
+            TimerCIV.Enabled = false;
         }
         private void TimerFindMyRadioLoop(object sender, EventArgs e)
         {
@@ -509,7 +516,7 @@ namespace Icom_Proxy
 
                     if (RadioSerialPort.IsOpen) RadioSerialPortWrite(SerialPort_value.dataProgram1Receiving, 0, SerialPort_value.dataProgram1Receiving.Length);
 
-                    FunctionSendCIV(SerialPort_value.dataProgram1Receiving, SerialPort_value.portProgram1Name);
+                    FunctionCheckCIV(SerialPort_value.dataProgram1Receiving, SerialPort_value.portProgram1Name);
 
                     if (RadioHexTextBox.Text != SerialPort_value.dataProgram1Receiving[2].ToString("X2") && RadioHexTextBox.Text != "" && checkBoxForceCIV.Checked == false)
                     {
@@ -547,7 +554,7 @@ namespace Icom_Proxy
                     
                     if (RadioSerialPort.IsOpen) RadioSerialPortWrite(SerialPort_value.dataProgram2Receiving, 0, SerialPort_value.dataProgram2Receiving.Length);
 
-                    FunctionSendCIV(SerialPort_value.dataProgram2Receiving, SerialPort_value.portProgram2Name);
+                    FunctionCheckCIV(SerialPort_value.dataProgram2Receiving, SerialPort_value.portProgram2Name);
 
                     if (RadioHexTextBox.Text != SerialPort_value.dataProgram2Receiving[2].ToString("X2") && RadioHexTextBox.Text != "" && checkBoxForceCIV.Checked == false)
                     {
@@ -584,7 +591,7 @@ namespace Icom_Proxy
                     
                     if (RadioSerialPort.IsOpen) RadioSerialPortWrite(SerialPort_value.dataProgram3Receiving, 0, SerialPort_value.dataProgram3Receiving.Length);
 
-                    FunctionSendCIV(SerialPort_value.dataProgram3Receiving, SerialPort_value.portProgram3Name);
+                    FunctionCheckCIV(SerialPort_value.dataProgram3Receiving, SerialPort_value.portProgram3Name);
 
                     if (RadioHexTextBox.Text != SerialPort_value.dataProgram3Receiving[2].ToString("X2") && RadioHexTextBox.Text != "" && checkBoxForceCIV.Checked == false)
                     {
@@ -658,7 +665,8 @@ namespace Icom_Proxy
             RadioComPortList.Enabled = !active;
             RadioBaudList.Enabled = !active;
 
-            TXButton.Enabled = active;
+            RTSButton.Enabled = active;
+            CIVButton.Enabled = active;
 
             StartDummyLoadButton.Enabled = active;
             StopDummyLoadButton.Enabled = active;
@@ -857,29 +865,45 @@ namespace Icom_Proxy
         }
 
 
-        private void TXPress(object sender, KeyEventArgs e)
+        private void RTSPress(object sender, KeyEventArgs e)
         {
-            this.FunctionTX(true, "Button");
+            this.FunctionRtsPtt(true, "RTS-Button");
         }
-        private void TXRelease(object sender, KeyEventArgs e)
+        private void RTSRelease(object sender, KeyEventArgs e)
         {
-            this.FunctionTX(false, "Button");
+            this.FunctionRtsPtt(false, "RTS-Button");
         }
-        private void TXPress(object sender, MouseEventArgs e)
+        private void RTSPress(object sender, MouseEventArgs e)
         {
-            this.FunctionTX(true, "Button");
+            this.FunctionRtsPtt(true, "RTS-Button");
         }
-        private void TXRelease(object sender, MouseEventArgs e)
+        private void RTSRelease(object sender, MouseEventArgs e)
         {
-            this.FunctionTX(false, "Button");
+            this.FunctionRtsPtt(false, "RTS-Button");
         }
 
+        private void CIVPress(object sender, KeyEventArgs e)
+        {
+            this.FunctionCivPtt(true, "CIV-Button");
+        }
+        private void CIVRelease(object sender, KeyEventArgs e)
+        {
+            this.FunctionCivPtt(false, "CIV-Button");
+        }
+        private void CIVPress(object sender, MouseEventArgs e)
+        {
+            this.FunctionCivPtt(true, "CIV-Button");
+        }
+        private void CIVRelease(object sender, MouseEventArgs e)
+        {
+            this.FunctionCivPtt(false, "CIV-Button");
+        }
         private void Program1SerialPort_PinChanged(object sender, SerialPinChangedEventArgs e)
         {
 
             if (e.EventType == SerialPinChange.CtsChanged)
             {
-                FunctionTX(Program1SerialPort.CtsHolding, SerialPort_value.portProgram1Name);
+                FunctionRtsPtt(Program1SerialPort.CtsHolding, SerialPort_value.portProgram1Name);
             }
         }
         private void Program2SerialPort_PinChanged(object sender, SerialPinChangedEventArgs e)
@@ -887,7 +911,7 @@ namespace Icom_Proxy
             
             if (e.EventType == SerialPinChange.CtsChanged)
             {
-                FunctionTX(Program2SerialPort.CtsHolding, SerialPort_value.portProgram2Name);
+                FunctionRtsPtt(Program2SerialPort.CtsHolding, SerialPort_value.portProgram2Name);
             }
         }
         private void Program3SerialPort_PinChanged(object sender, SerialPinChangedEventArgs e)
@@ -895,16 +919,15 @@ namespace Icom_Proxy
             
             if (e.EventType == SerialPinChange.CtsChanged)
             {
-                FunctionTX(Program3SerialPort.CtsHolding, SerialPort_value.portProgram3Name);
+                FunctionRtsPtt(Program3SerialPort.CtsHolding, SerialPort_value.portProgram3Name);
             }
         }
 
-        private void FunctionSendCIV(byte[] Data, string sender)
+        private void FunctionCheckCIV(byte[] Data, string sender)
         {
 
-            if (Data.Length == 8)
+            if (RadioSerialPort.IsOpen && Data.Length >= 8)
             {
-
                 var PttOn = new byte[Radio.CIV.PttOn.Length];
                 var PttOff = new byte[Radio.CIV.PttOff.Length];
 
@@ -914,81 +937,121 @@ namespace Icom_Proxy
                 PttOn[2] = Data[2];
                 PttOff[2] = Data[2];
 
-
                 Invoke((MethodInvoker)delegate
                 {
 
-                    if (RadioSerialPort.IsOpen)
+                    if (StructuralComparisons.StructuralEqualityComparer.Equals(PttOn, Data))
                     {
-                        if (StructuralComparisons.StructuralEqualityComparer.Equals(PttOn, Data))
-                        {
-                            TXButton.BackColor = Color.Red;
+                        CIVButton.BackColor = Color.Red;
+                        TimerCIV.Enabled = true;
+                        DebugLogTextInsert(sender+"-CIV", "PTT-ON");
 
-                                RadioSerialPort.RtsEnable = true;
-                                TimerTX.Enabled = true;
-                                DebugLogTextInsert(sender, "PttCIV2RTS: on");
-                        }
-                        if (StructuralComparisons.StructuralEqualityComparer.Equals(PttOff, Data))
+                        if (checkBoxCivToRts.Checked)
                         {
-                            TXButton.BackColor = default;
-                            TXButton.UseVisualStyleBackColor = true;
-
-                                RadioSerialPort.RtsEnable = false;
-                                TimerTX.Enabled = false;
-                                DebugLogTextInsert(sender, "PttCIV2RTS: off");
+                            FunctionRtsPtt(true, sender + "-CIV");
                         }
+                    }
+                    if (StructuralComparisons.StructuralEqualityComparer.Equals(PttOff, Data))
+                    {
+                        CIVButton.BackColor = default;
+                        CIVButton.UseVisualStyleBackColor = true;
+                        TimerCIV.Enabled = false;
+                        DebugLogTextInsert(sender + "-CIV", "PTT-OFF");
+
+                        if (checkBoxCivToRts.Checked)
+                        {
+                            FunctionRtsPtt(false, sender + "-CIV");
+                        }
+                    }
+                    if (Data[4].ToString("x2").Equals("05"))
+                    {
+                        string freq="";
+
+                        freq += Data[09].ToString("x2").ToString();
+                        freq += Data[08].ToString("x2").ToString();
+                        freq += Data[07].ToString("x2").ToString();
+                        freq += Data[06].ToString("x2").ToString();
+                        freq += Data[05].ToString("x2").ToString();
+//                        freq = freq.TrimStart('0');
+                        freq = (decimal.Parse(freq) / 1000).ToString();
+                        DebugLogTextInsert(sender, freq + " kHz");
+                        ;
                     }
 
                 });
             }
 
         }
-        private void FunctionTX(Boolean button, string sender)
+        private void FunctionRtsPtt(Boolean CTSStatus, string sender)
         {
-            var PttOn = new byte[Radio.CIV.PttOn.Length];
-            var PttOff = new byte[Radio.CIV.PttOff.Length];
-
-            PttOn = Radio.CIV.PttOn;
-            PttOff = Radio.CIV.PttOff;
-
             Invoke((MethodInvoker)delegate
             {
-                if (RadioHexTextBox.TextLength > 0)
+                if (RadioSerialPort.IsOpen)
                 {
-                    PttOn[2]  = Convert.ToByte(RadioHexTextBox.Text, 16);
-                    PttOff[2] = Convert.ToByte(RadioHexTextBox.Text, 16);
-                }
-
-                if (button)
-                {
-                    if (RadioSerialPort.IsOpen)
+                    if (CTSStatus)
                     {
-                        TXButton.BackColor = Color.Red;
+                        RTSButton.BackColor = Color.Red;
                         RadioSerialPort.RtsEnable = true;
-                        RadioSerialPortWrite(PttOn, 0, PttOn.Length);                        
-                        DebugLogTextInsert(sender, BitConverter.ToString(PttOn, 0, PttOn.Length).Replace("-", " "));
-                        TimerTX.Enabled = true;
+                        TimerRTS.Enabled = true;
+                        DebugLogTextInsert(sender + "-RTS", "PTT-ON");
                     }
                     else
                     {
-                        DebugLogTextInsert(sender, "Error: Radio not active");
+                        RTSButton.BackColor = default;
+                        RTSButton.UseVisualStyleBackColor = true;
+                        RadioSerialPort.RtsEnable = false;
+                        TimerRTS.Enabled = false;
+                        DebugLogTextInsert(sender+"-RTS", "PTT-OFF");
+                    }
+
+                    if (checkBoxRtsToCiv.Checked)
+                    {
+                        FunctionCivPtt(CTSStatus, sender + "-RTS");
                     }
 
                 }
                 else
                 {
-                    if (RadioSerialPort.IsOpen)
+                    DebugLogTextInsert(sender, "Error: Radio not active");
+                }
+
+            });
+
+        }
+        private void FunctionCivPtt(Boolean button, string sender)
+        {
+
+            Invoke((MethodInvoker)delegate
+            {
+
+                if (RadioHexTextBox.TextLength > 0 && RadioSerialPort.IsOpen)
+                {
+                    var PttOn = new byte[Radio.CIV.PttOn.Length];
+                    var PttOff = new byte[Radio.CIV.PttOff.Length];
+
+                    PttOn = Radio.CIV.PttOn;
+                    PttOff = Radio.CIV.PttOff;
+
+                    PttOn[2] = Convert.ToByte(RadioHexTextBox.Text, 16);
+                    PttOff[2] = Convert.ToByte(RadioHexTextBox.Text, 16);
+
+                    if (button)
                     {
-                        TXButton.BackColor = default;
-                        TXButton.UseVisualStyleBackColor = true;
-                        RadioSerialPort.RtsEnable = false;
-                        RadioSerialPortWrite(PttOff, 0, PttOff.Length);
-                        DebugLogTextInsert(sender, BitConverter.ToString(PttOff, 0, PttOff.Length).Replace("-", " "));
-                        TimerTX.Enabled = false;
+                            CIVButton.BackColor = Color.Red;
+                            RadioSerialPortWrite(PttOn, 0, PttOn.Length);
+                            DebugLogTextInsert(sender, BitConverter.ToString(PttOn, 0, PttOn.Length).Replace("-", " "));
+                            DebugLogTextInsert(sender+"-CIV", "PTT-ON");
+                            TimerCIV.Enabled = true;
+
                     }
                     else
                     {
-                        DebugLogTextInsert(sender, "Error: Radio not active");
+                            CIVButton.BackColor = default;
+                            CIVButton.UseVisualStyleBackColor = true;
+                            RadioSerialPortWrite(PttOff, 0, PttOff.Length);
+                            DebugLogTextInsert(sender, BitConverter.ToString(PttOff, 0, PttOff.Length).Replace("-", " "));
+                            DebugLogTextInsert(sender + "-CIV", "PTT-OFF");
+                            TimerCIV.Enabled = false;
                     }
                 }
 
@@ -1030,7 +1093,8 @@ namespace Icom_Proxy
                     Properties.Settings.Default.port_nameProgram2 = SerialPort_value.portProgram2Name;
                     Properties.Settings.Default.port_nameProgram3 = SerialPort_value.portProgram3Name;
 
-                    Properties.Settings.Default.Ptt_timeout = TimerTX.Interval / 1000;
+                    Properties.Settings.Default.Ptt_timeout = TimerRTS.Interval / 1000;
+                    Properties.Settings.Default.Ptt_timeout = TimerCIV.Interval / 1000;
 
                     Properties.Settings.Default.Save();
                 }
@@ -1076,12 +1140,14 @@ namespace Icom_Proxy
                     if (global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout != 0)
                     {
                         RadioTxTimeoutTextBox.Text = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout.ToString();
-                        TimerTX.Interval    = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout * 1000;
-                     }
+                        TimerRTS.Interval = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout * 1000;
+                        TimerCIV.Interval = global::Icom_Proxy.Properties.Settings.Default.Ptt_timeout * 1000;
+                    }
                     else
                     {
                         RadioTxTimeoutTextBox.Text = "300";
-                        TimerTX.Interval = 300 * 1000;
+                        TimerRTS.Interval = 300 * 1000;
+                        TimerCIV.Interval = 300 * 1000;
                     }
 
 
@@ -1195,7 +1261,8 @@ namespace Icom_Proxy
             
             if (int.TryParse(RadioTxTimeoutTextBox.Text, out value))
             {
-                TimerTX.Interval = value*1000;
+                TimerRTS.Interval = value * 1000;
+                TimerCIV.Interval = value * 1000;
                 SaveSettings();
             }
 
@@ -1234,7 +1301,8 @@ namespace Icom_Proxy
             checkBox_DL_2800.Enabled = TrueOrFalse;
             checkBox_DL_2900.Enabled = TrueOrFalse;
 
-            TXButton.Enabled = TrueOrFalse;
+            RTSButton.Enabled = TrueOrFalse;
+            CIVButton.Enabled = TrueOrFalse;
             com0comButton.Enabled = TrueOrFalse;
             SoundButton.Enabled = TrueOrFalse;
             DeviceButton.Enabled = TrueOrFalse;
@@ -1268,7 +1336,7 @@ namespace Icom_Proxy
             PlayFile(MakeFileTot(8820*5));
             CheckBox_DL_Enabled(false);
 
-            this.FunctionTX(true, "DummyLoad");
+            this.FunctionRtsPtt(true, "DummyLoad");
 
             TimerDummyLoad.Interval = sDuration * 1000;
             TimerDummyLoad.Enabled = true;
@@ -1282,7 +1350,7 @@ namespace Icom_Proxy
             CheckBox_DL_Enabled(true);
             writer.Close();
             mStrm.Close();
-            this.FunctionTX(false, "DummyLoad");
+            this.FunctionRtsPtt(false, "DummyLoad");
             sPlayer.Dispose();
             sPlayer.Stop();
             TimerDummyLoad.Enabled = false;

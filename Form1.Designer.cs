@@ -120,6 +120,8 @@
             this.StopDummyLoadButton = new System.Windows.Forms.Button();
             this.StartDummyLoadButton = new System.Windows.Forms.Button();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
+            this.checkBoxRtsToCiv = new System.Windows.Forms.CheckBox();
+            this.checkBoxCivToRts = new System.Windows.Forms.CheckBox();
             this.OpenExplorerForConfigFileButton = new System.Windows.Forms.Button();
             this.ShowToneTestButton = new System.Windows.Forms.Button();
             this.LogTimeCheckBox = new System.Windows.Forms.CheckBox();
@@ -140,8 +142,9 @@
             this.Program1Led = new System.Windows.Forms.Button();
             this.Program2Led = new System.Windows.Forms.Button();
             this.Program3Led = new System.Windows.Forms.Button();
-            this.TXButton = new System.Windows.Forms.Button();
+            this.RTSButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.CIVButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageRadio.SuspendLayout();
             this.tabPageProgram.SuspendLayout();
@@ -1135,6 +1138,8 @@
             // tabPageSettings
             // 
             this.tabPageSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageSettings.Controls.Add(this.checkBoxRtsToCiv);
+            this.tabPageSettings.Controls.Add(this.checkBoxCivToRts);
             this.tabPageSettings.Controls.Add(this.OpenExplorerForConfigFileButton);
             this.tabPageSettings.Controls.Add(this.ShowToneTestButton);
             this.tabPageSettings.Controls.Add(this.LogTimeCheckBox);
@@ -1155,6 +1160,26 @@
             this.tabPageSettings.Size = new System.Drawing.Size(603, 251);
             this.tabPageSettings.TabIndex = 4;
             this.tabPageSettings.Text = "Settings";
+            // 
+            // checkBoxRtsToCiv
+            // 
+            this.checkBoxRtsToCiv.AutoSize = true;
+            this.checkBoxRtsToCiv.Location = new System.Drawing.Point(8, 128);
+            this.checkBoxRtsToCiv.Name = "checkBoxRtsToCiv";
+            this.checkBoxRtsToCiv.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxRtsToCiv.TabIndex = 59;
+            this.checkBoxRtsToCiv.Text = "RTS to CIV";
+            this.checkBoxRtsToCiv.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCivToRts
+            // 
+            this.checkBoxCivToRts.AutoSize = true;
+            this.checkBoxCivToRts.Location = new System.Drawing.Point(8, 105);
+            this.checkBoxCivToRts.Name = "checkBoxCivToRts";
+            this.checkBoxCivToRts.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxCivToRts.TabIndex = 58;
+            this.checkBoxCivToRts.Text = "CIV to RTS";
+            this.checkBoxCivToRts.UseVisualStyleBackColor = true;
             // 
             // OpenExplorerForConfigFileButton
             // 
@@ -1286,7 +1311,7 @@
             this.DebugLogLinesTextBox.Name = "DebugLogLinesTextBox";
             this.DebugLogLinesTextBox.Size = new System.Drawing.Size(28, 20);
             this.DebugLogLinesTextBox.TabIndex = 53;
-            this.DebugLogLinesTextBox.Text = "9";
+            this.DebugLogLinesTextBox.Text = "20";
             this.DebugLogLinesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // RadioTxTimeoutTextBox
@@ -1335,7 +1360,7 @@
             // 
             this.RadioLed.Enabled = false;
             this.RadioLed.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RadioLed.Location = new System.Drawing.Point(399, 288);
+            this.RadioLed.Location = new System.Drawing.Point(334, 288);
             this.RadioLed.Name = "RadioLed";
             this.RadioLed.Size = new System.Drawing.Size(37, 34);
             this.RadioLed.TabIndex = 47;
@@ -1346,7 +1371,7 @@
             // 
             this.Program1Led.Enabled = false;
             this.Program1Led.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Program1Led.Location = new System.Drawing.Point(442, 288);
+            this.Program1Led.Location = new System.Drawing.Point(377, 288);
             this.Program1Led.Name = "Program1Led";
             this.Program1Led.Size = new System.Drawing.Size(37, 34);
             this.Program1Led.TabIndex = 48;
@@ -1357,7 +1382,7 @@
             // 
             this.Program2Led.Enabled = false;
             this.Program2Led.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Program2Led.Location = new System.Drawing.Point(485, 288);
+            this.Program2Led.Location = new System.Drawing.Point(420, 288);
             this.Program2Led.Name = "Program2Led";
             this.Program2Led.Size = new System.Drawing.Size(37, 34);
             this.Program2Led.TabIndex = 49;
@@ -1368,27 +1393,27 @@
             // 
             this.Program3Led.Enabled = false;
             this.Program3Led.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Program3Led.Location = new System.Drawing.Point(528, 288);
+            this.Program3Led.Location = new System.Drawing.Point(463, 288);
             this.Program3Led.Name = "Program3Led";
             this.Program3Led.Size = new System.Drawing.Size(37, 34);
             this.Program3Led.TabIndex = 50;
             this.Program3Led.Text = "P3";
             this.Program3Led.UseVisualStyleBackColor = true;
             // 
-            // TXButton
+            // RTSButton
             // 
-            this.TXButton.Enabled = false;
-            this.TXButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TXButton.Location = new System.Drawing.Point(568, 289);
-            this.TXButton.Name = "TXButton";
-            this.TXButton.Size = new System.Drawing.Size(37, 34);
-            this.TXButton.TabIndex = 51;
-            this.TXButton.Text = "TX";
-            this.TXButton.UseVisualStyleBackColor = true;
-            this.TXButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TXPress);
-            this.TXButton.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TXRelease);
-            this.TXButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TXPress);
-            this.TXButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TXRelease);
+            this.RTSButton.Enabled = false;
+            this.RTSButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RTSButton.Location = new System.Drawing.Point(503, 289);
+            this.RTSButton.Name = "RTSButton";
+            this.RTSButton.Size = new System.Drawing.Size(50, 34);
+            this.RTSButton.TabIndex = 51;
+            this.RTSButton.Text = "RTS";
+            this.RTSButton.UseVisualStyleBackColor = true;
+            this.RTSButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RTSPress);
+            this.RTSButton.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RTSRelease);
+            this.RTSButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RTSPress);
+            this.RTSButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.RTSRelease);
             // 
             // button1
             // 
@@ -1399,13 +1424,29 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.OpenExplorerForConfigFile);
             // 
+            // CIVButton
+            // 
+            this.CIVButton.Enabled = false;
+            this.CIVButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CIVButton.Location = new System.Drawing.Point(559, 288);
+            this.CIVButton.Name = "CIVButton";
+            this.CIVButton.Size = new System.Drawing.Size(50, 34);
+            this.CIVButton.TabIndex = 52;
+            this.CIVButton.Text = "CIV";
+            this.CIVButton.UseVisualStyleBackColor = true;
+            this.CIVButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CIVPress);
+            this.CIVButton.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CIVRelease);
+            this.CIVButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CIVPress);
+            this.CIVButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CIVRelease);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(619, 330);
-            this.Controls.Add(this.TXButton);
+            this.Controls.Add(this.CIVButton);
+            this.Controls.Add(this.RTSButton);
             this.Controls.Add(this.Program3Led);
             this.Controls.Add(this.Program2Led);
             this.Controls.Add(this.Program1Led);
@@ -1543,7 +1584,7 @@
         private System.Windows.Forms.Button Program1Led;
         private System.Windows.Forms.Button Program2Led;
         private System.Windows.Forms.Button Program3Led;
-        private System.Windows.Forms.Button TXButton;
+        private System.Windows.Forms.Button RTSButton;
         private System.Windows.Forms.TextBox Program3infoBox;
         private System.Windows.Forms.TextBox Program2infoBox;
         private System.Windows.Forms.Button OpenExplorerForConfigFileButton;
@@ -1554,6 +1595,9 @@
         private System.Windows.Forms.CheckBox LogDateCheckBox;
         private System.Windows.Forms.CheckBox LogTimeCheckBox;
         private System.Windows.Forms.Button ShowToneTestButton;
+        private System.Windows.Forms.CheckBox checkBoxCivToRts;
+        private System.Windows.Forms.CheckBox checkBoxRtsToCiv;
+        private System.Windows.Forms.Button CIVButton;
     }
 }
 
