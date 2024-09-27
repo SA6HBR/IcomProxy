@@ -1352,7 +1352,7 @@
             this.label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label8.Location = new System.Drawing.Point(439, 8);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(175, 16);
+            this.label8.Size = new System.Drawing.Size(174, 16);
             this.label8.TabIndex = 40;
             this.label8.Text = "software @ SA6HBR . se";
             // 

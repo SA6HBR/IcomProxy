@@ -16,6 +16,7 @@ namespace Icom_Proxy
 
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
@@ -266,26 +267,26 @@ namespace Icom_Proxy
 
             Initiate = Radio.CIV.Initiate;
 
-            Initiate[2] = Radio.CIV.Adress;
+            Initiate[2] = Radio.CIV.Address;
 
 
-            if (RadioHexTextBox.TextLength == 0 && Radio.CIV.Adress != 0xff && RadioSerialPort.IsOpen)
+            if (RadioHexTextBox.TextLength == 0 && Radio.CIV.Address != 0xff && RadioSerialPort.IsOpen)
             {
                 DebugLogTextInsert("FindMyRadio", BitConverter.ToString(Initiate, 0, Initiate.Length).Replace("-", " "));
                 RadioSerialPortWrite(Initiate, 0, Initiate.Length);
             }
             else if (RadioHexTextBox.TextLength > 0)
             {
-                DebugLogTextInsert("CI-V Adress", RadioHexTextBox.Text);
+                DebugLogTextInsert("CI-V Address", RadioHexTextBox.Text);
                 TimerFindMyRadio.Enabled = false;
             }
             else
             {
-                DebugLogTextInsert("Error", "No CI-V Adress!");
+                DebugLogTextInsert("Error", "No CI-V Address!");
                 TimerFindMyRadio.Enabled = false;
             }
 
-            Radio.CIV.Adress +=1;
+            Radio.CIV.Address +=1;
         }
         private void TimerDummyLoadLoop(object sender, EventArgs e)
         {
@@ -623,7 +624,7 @@ namespace Icom_Proxy
 
                 if (RadioHexTextBox.TextLength == 0) 
                 {
-                    Radio.CIV.Adress = 00;
+                    Radio.CIV.Address = 00;
                     TimerFindMyRadio.Enabled = true; 
                 }
 
@@ -965,18 +966,49 @@ namespace Icom_Proxy
                     }
                     if (Data[4].ToString("x2").Equals("05"))
                     {
-                        string freq="";
+                        string freq = "";
 
-                        freq += Data[09].ToString("x2").ToString();
-                        freq += Data[08].ToString("x2").ToString();
-                        freq += Data[07].ToString("x2").ToString();
-                        freq += Data[06].ToString("x2").ToString();
-                        freq += Data[05].ToString("x2").ToString();
-//                        freq = freq.TrimStart('0');
-                        freq = (decimal.Parse(freq) / 1000).ToString();
-                        DebugLogTextInsert(sender, freq + " kHz");
+                        for (int i = 9; i >= 5; i--)
+                        {
+                            if (Data[i] >= 0x00 && Data[i] <= 0x99)
+                            {
+                                freq += Data[i].ToString("x2").ToString();
+                            }
+                        }
+                        try
+                        {
+                            freq = (decimal.Parse(freq) / 1000).ToString();
+                            DebugLogTextInsert(sender, freq + " kHz");
+                        }
+                        catch (Exception)
+                        {
+                            DebugLogTextInsert(sender, "Wrong freq. code: " + freq);
+                        }
+                    }
+                    if (Data[4].ToString("x2").Equals("25"))
+                    {
+                        string freq = "";
+
+                        for (int i = 10; i >= 5; i--)
+                        {
+                            if (Data[i] >= 0x00 && Data[i] <= 0x99)
+                            {
+                                freq += Data[i].ToString("x2").ToString();
+                            }
+                        }
+                        try
+                        {
+                            freq = (decimal.Parse(freq) / 100000).ToString();
+                            DebugLogTextInsert(sender, freq + " kHz");
+                        }
+                        catch (Exception)
+                        {
+                            DebugLogTextInsert(sender, "Wrong freq. code: " + freq);
+                        }
                         ;
                     }
+                        ;
+
 
                 });
             }

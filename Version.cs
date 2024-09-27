@@ -7,7 +7,7 @@ namespace Icom_Proxy
 {
     public class Version
     {
-        public static string NameAndNumber = "Icom-Proxy 2.0.7 - SA6HBR";
+        public static string NameAndNumber = "Icom-Proxy 2.0.8 - BETA - SA6HBR";
     }
 
     /*
@@ -29,5 +29,6 @@ namespace Icom_Proxy
     2.0.5 - Better way to handle choice of comport.
     2.0.6 - Some bugs
     2.0.7 - Bug with ptt for IC-7100
+    2.0.8 - Bug with freq. for Ic-706. Fix swedish adress to english address 
      */
 }

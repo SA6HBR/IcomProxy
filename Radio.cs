@@ -12,8 +12,8 @@ namespace Icom_Proxy
 
         public class CIV
         {
-            //Adress
-            public static byte Adress = 0x00;
+            //Address
+            public static byte Address = 0x00;
 
             //PTT
             public static byte[] PttOn  = new byte[] { 0xFE, 0xFE, 0x00, 0xE0, 0x1C, 0x00, 0x01, 0xFD };
