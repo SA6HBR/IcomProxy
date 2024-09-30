@@ -7,7 +7,7 @@ namespace Icom_Proxy
 {
     public class Version
     {
-        public static string NameAndNumber = "Icom-Proxy 2.0.8 - BETA - SA6HBR";
+        public static string NameAndNumber = "Icom-Proxy 2.0.8 - SA6HBR";
     }
 
     /*
